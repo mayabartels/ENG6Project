@@ -8,6 +8,8 @@ classdef gamePlayer
         playerScore;    % Keep track of the score for each player object
         dice1Roll;      % The value for the first roll of the dice per turn
         dice2Roll;      % The value for the second roll of the dice per turn
+        
+        % These may or may not be necessary. They might be useful
         playerTurn;     % Boolean value for if it is the player's turn
         playerWin;      % Boolean value for if the player won (1 = win, 0 = lose)
     end

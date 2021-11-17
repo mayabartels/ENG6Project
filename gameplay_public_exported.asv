@@ -91,7 +91,8 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             %sound(y,Fs)
             
             % Test to make sure files can read each other
-            [rollScore, outGameScore, outRoundScore, diceOne, diceTwo] = diceRoll(1);
+            [rollScore, outGameScore, outRoundScore, diceOne, diceTwo] = diceRoll.diceRoll(1);
+            disp(10)
         end
 
         % Value changed function: ScoreEditField_2

@@ -6,6 +6,7 @@ classdef gamePlayer
         playerName;     % Name of the player object
         playerNum;      % {1,2} since game will be played by 1 or 2 players
         playerScore;    % Keep track of the score for each player object
+        playerRoundNum  % Keep track of the round number for each player
         playerTurn;     % Boolean value for if it is the player's turn
         playerWin;      % Boolean value for if the player won (1 = win, 0 = lose)
     end

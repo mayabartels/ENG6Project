@@ -47,6 +47,12 @@ classdef gameplay_public_exported < matlab.apps.AppBase
 
     % Callbacks that handle component events
     methods (Access = private)
+        
+        % Code that executes after component creation
+        function startupFcn(app)
+            player1 = gamePlayer("Player 1 Name", 1, 0, 0, 0, 0);
+            player2 = gamePlayer("Player 2 Name", 2, 0, 0, 0, 0);
+        end
 
         % Callback function
         function OptionsButtonPushed(app, event)
@@ -66,12 +72,42 @@ classdef gameplay_public_exported < matlab.apps.AppBase
 
         % Button pushed function: PlayagainButton
         function PlayagainButtonPushed(app, event)
-          gameScore = randi(1,1, 12)
-          
-          gameScore = rand(gameScore)
-            display(gameScore);
-            app.ScoreEditField.Value = gameScore
-            [y,Fs]=audioread("MANYDICE.wav")
+            %gameScore = randi(1,1, 12)
+            %gameScore = rand(gameScore)
+            
+            while player1.playerTurn == 1
+                
+                % Roll the dice
+                [rollScore] = diceRoll(1);
+                
+                % Calculate the score for the round
+                [diceScore, gameScore] = scoreUpdate(rollScore);
+                
+                % Update the player score based on the dice roll
+                [playerScore] = updatePlayerScore(player1, diceScore);
+                
+                % Reset the player score if necessary (snake eyes rolled)
+                resetScore(gameScore);
+                
+                % Display the player score
+                app.ScoreEditField.Value = playerScore;
+                
+                % Make it the other player's turn if snake eye or eyes
+                % rolled
+                if gameScore == 0
+                    
+                    player1.playerTurn = 0;
+                    player2.playerTurn = 1;
+                    
+                else
+                end
+                
+            end
+            
+            %display(gameScore);
+            %app.ScoreEditField.Value = gameScore
+            
+            [y,Fs] = audioread("MANYDICE.wav");
             sound(y,Fs)
         end
 
@@ -82,12 +118,42 @@ classdef gameplay_public_exported < matlab.apps.AppBase
 
         % Button pushed function: RollagainButton
         function RollagainButtonPushed(app, event)
-            gameScore = randi(1,1, 12)
-          
-          gameScore = rand(gameScore)
-            display(gameScore);
-            app.ScoreEditField_2.Value = gameScore
-            [y,Fs]=audioread("MANYDICE.wav")
+            %gameScore = randi(1,1, 12)
+            %gameScore = rand(gameScore)
+            
+            while player2.playerTurn == 1
+                
+                % Roll the dice
+                [rollScore] = diceRoll(1);
+                
+                % Calculate the score for the round
+                [diceScore, gameScore] = scoreUpdate(rollScore);
+                
+                % Update the player score based on the dice roll
+                [playerScore] = updatePlayerScore(player2, diceScore);
+                
+                % Reset the player score if necessary (snake eyes rolled)
+                resetScore(gameScore);
+                
+                % Display the player score
+                app.ScoreEditField.Value = playerScore;
+                
+                % Make it the other player's turn if snake eye or eyes
+                % rolled
+                if gameScore == 0
+                    
+                    player1.playerTurn = 1;
+                    player2.playerTurn = 0;
+                    
+                else
+                end
+                
+            end
+            
+            %display(gameScore);
+            %app.ScoreEditField_2.Value = gameScore
+            
+            [y,Fs] = audioread("MANYDICE.wav");
             sound(y,Fs)
         end
 
@@ -99,14 +165,14 @@ classdef gameplay_public_exported < matlab.apps.AppBase
         % Button pushed function: EndgameButton
         function EndgameButtonPushed(app, event)
             endgamescreen
-         [y,Fs]=audioread("endGame.wav")
+         [  y,Fs] = audioread("endGame.wav");
             sound(y,Fs)   
         end
 
         % Button pushed function: EndGameButton
         function EndGameButtonPushed(app, event)
             endgamescreen
-            [y,Fs]=audioread("endGame.wav")
+            [y,Fs] = audioread("endGame.wav");
             sound(y,Fs)
         end
     end

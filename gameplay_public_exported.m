@@ -50,7 +50,8 @@ classdef gameplay_public_exported < matlab.apps.AppBase
         
         % Code that executes after component creation
         function startupFcn(app)
-            player1 = gamePlayer("Player 1 Name", 1, 0, 0, 0, 0);
+            app.ScoreEditField.Value = 100;
+            player1 = gamePlayer("Player 1 Name", 1, 0, 0, 1, 0);
             player2 = gamePlayer("Player 2 Name", 2, 0, 0, 0, 0);
         end
 
@@ -165,7 +166,7 @@ classdef gameplay_public_exported < matlab.apps.AppBase
         % Button pushed function: EndgameButton
         function EndgameButtonPushed(app, event)
             endgamescreen
-         [  y,Fs] = audioread("endGame.wav");
+            [y,Fs] = audioread("endGame.wav");
             sound(y,Fs)   
         end
 
@@ -282,6 +283,9 @@ classdef gameplay_public_exported < matlab.apps.AppBase
 
             % Register the app with App Designer
             registerApp(app, app.UIFigure)
+            
+            % Run the startup function
+            runStartupFcn(app, @startupFcn)
 
             if nargout == 0
                 clear app

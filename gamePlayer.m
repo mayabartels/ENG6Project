@@ -17,12 +17,12 @@ classdef gamePlayer
         function obj = gamePlayer(playerName, playerNum, playerScore, playerRoundNum, playerTurn, playerWin)
             
             if nargin == 6
-                player.playerName = playerName;
-                player.playerNum = playerNum;
-                player.playerScore = playerScore;
-                player.playerRoundNum = playerRoundNum;
-                player.playerTurn = playerTurn;
-                player.playerWin = playerWin;
+                obj.playerName = playerName;
+                obj.playerNum = playerNum;
+                obj.playerScore = playerScore;
+                obj.playerRoundNum = playerRoundNum;
+                obj.playerTurn = playerTurn;
+                obj.playerWin = playerWin;
             else
                 disp("Input error message");
             end

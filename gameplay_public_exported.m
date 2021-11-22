@@ -17,6 +17,9 @@ classdef gameplay_public_exported < matlab.apps.AppBase
         Player1Label           matlab.ui.control.Label
         UITable2               matlab.ui.control.Table
         UITable                matlab.ui.control.Table
+        
+        Player1 = gamePlayer("Player 1 Name", 1, 0, 0, 1, 0);
+        Player2 = gamePlayer("Player 2 Name", 2, 0, 0, 0, 0);
     end
 
 
@@ -50,9 +53,9 @@ classdef gameplay_public_exported < matlab.apps.AppBase
         
         % Code that executes after component creation
         function startupFcn(app)
-            app.ScoreEditField.Value = 100;
-            player1 = gamePlayer("Player 1 Name", 1, 0, 0, 1, 0);
-            player2 = gamePlayer("Player 2 Name", 2, 0, 0, 0, 0);
+            %app.ScoreEditField.Value = 100;
+            %player1 = gamePlayer("Player 1 Name", 1, 0, 0, 1, 0);
+            %player2 = gamePlayer("Player 2 Name", 2, 0, 0, 0, 0);
         end
 
         % Callback function
@@ -76,7 +79,7 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             %gameScore = randi(1,1, 12)
             %gameScore = rand(gameScore)
             
-            while player1.playerTurn == 1
+            while app.Player1.playerTurn == 1
                 
                 % Roll the dice
                 [rollScore] = diceRoll(1);
@@ -85,10 +88,10 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 [diceScore, gameScore] = scoreUpdate(rollScore);
                 
                 % Update the player score based on the dice roll
-                [playerScore] = updatePlayerScore(player1, diceScore);
+                [playerScore] = updatePlayerScore(app.Player1.playerScore, diceScore);
                 
                 % Reset the player score if necessary (snake eyes rolled)
-                resetScore(gameScore);
+                resetScore(app.Player1, gameScore);
                 
                 % Display the player score
                 app.ScoreEditField.Value = playerScore;
@@ -97,8 +100,8 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 % rolled
                 if gameScore == 0
                     
-                    player1.playerTurn = 0;
-                    player2.playerTurn = 1;
+                    app.Player1.playerTurn = 0;
+                    app.Player2.playerTurn = 1;
                     
                 else
                 end
@@ -108,8 +111,8 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             %display(gameScore);
             %app.ScoreEditField.Value = gameScore
             
-            [y,Fs] = audioread("MANYDICE.wav");
-            sound(y,Fs)
+            %[y,Fs] = audioread("MANYDICE.wav");
+            %sound(y,Fs)
         end
 
         % Value changed function: ScoreEditField
@@ -122,7 +125,7 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             %gameScore = randi(1,1, 12)
             %gameScore = rand(gameScore)
             
-            while player2.playerTurn == 1
+            while app.Player2.playerTurn == 1
                 
                 % Roll the dice
                 [rollScore] = diceRoll(1);
@@ -131,20 +134,20 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 [diceScore, gameScore] = scoreUpdate(rollScore);
                 
                 % Update the player score based on the dice roll
-                [playerScore] = updatePlayerScore(player2, diceScore);
+                [playerScore] = updatePlayerScore(app.Player2.playerScore, diceScore);
                 
                 % Reset the player score if necessary (snake eyes rolled)
-                resetScore(gameScore);
+                resetScore(app.Player2, gameScore);
                 
                 % Display the player score
-                app.ScoreEditField.Value = playerScore;
+                app.ScoreEditField_2.Value = playerScore;
                 
                 % Make it the other player's turn if snake eye or eyes
                 % rolled
                 if gameScore == 0
                     
-                    player1.playerTurn = 1;
-                    player2.playerTurn = 0;
+                    app.Player1.playerTurn = 1;
+                    app.Player2.playerTurn = 0;
                     
                 else
                 end
@@ -154,8 +157,8 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             %display(gameScore);
             %app.ScoreEditField_2.Value = gameScore
             
-            [y,Fs] = audioread("MANYDICE.wav");
-            sound(y,Fs)
+            %[y,Fs] = audioread("MANYDICE.wav");
+            %sound(y,Fs)
         end
 
         % Value changed function: ScoreEditField_2

@@ -6,7 +6,7 @@ classdef gamePlayer
         playerName;     % Name of the player object
         playerNum;      % {1,2} since game will be played by 1 or 2 players
         playerScore;    % Keep track of the score for each player object
-        playerRoundNum  % Keep track of the round number for each player
+        playerRoundNum; % Keep track of the round number for each player
         playerTurn;     % Boolean value for if it is the player's turn
         playerWin;      % Boolean value for if the player won (1 = win, 0 = lose)
     end
@@ -17,12 +17,12 @@ classdef gamePlayer
         function obj = gamePlayer(playerName, playerNum, playerScore, playerRoundNum, playerTurn, playerWin)
             
             if nargin == 6
-                player.playerName = playerName;
-                player.playerNum = playerNum;
-                player.playerScore = playerScore;
-                player.playerRoundNum = playerRoundNum;
-                player.playerTurn = playerTurn;
-                player.playerWin = playerWin;
+                obj.playerName = playerName;
+                obj.playerNum = playerNum;
+                obj.playerScore = playerScore;
+                obj.playerRoundNum = playerRoundNum;
+                obj.playerTurn = playerTurn;
+                obj.playerWin = playerWin;
             else
                 disp("Input error message");
             end

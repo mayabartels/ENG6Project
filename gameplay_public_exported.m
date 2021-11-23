@@ -18,9 +18,9 @@ classdef gameplay_public_exported < matlab.apps.AppBase
         UITable2               matlab.ui.control.Table
         UITable                matlab.ui.control.Table
         
-        Player1 = gamePlayer("Player 1 Name", 1, 0, 1, 1, 0);
-        Player2 = gamePlayer("Player 2 Name", 2, 0, 1, 0, 0);
-        PlayerRolls = 0;
+        Player1 = gamePlayer("Player 1 Name", 1, 0, 1, 1, 0); % Creating Player1 object
+        Player2 = gamePlayer("Player 2 Name", 2, 0, 1, 0, 0); % Creating Player2 object
+        PlayerRolls = 0;       % Used to track the number of rolls per turn for each player
     end
 
 
@@ -120,11 +120,6 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             %sound(y,Fs)
         end
 
-        % Value changed function: ScoreEditField
-        function ScoreEditFieldValueChanged(app, event)
-            
-        end
-
         % Button pushed function: RollagainButton
         function RollagainButtonPushed(app, event)
             
@@ -175,11 +170,6 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             
             %[y,Fs] = audioread("MANYDICE.wav");
             %sound(y,Fs)
-        end
-
-        % Value changed function: ScoreEditField_2
-        function ScoreEditField_2ValueChanged(app, event)
-         
         end
 
         % Button pushed function: EndgameButton

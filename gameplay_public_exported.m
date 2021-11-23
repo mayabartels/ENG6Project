@@ -17,6 +17,9 @@ classdef gameplay_public_exported < matlab.apps.AppBase
         Player1Label           matlab.ui.control.Label
         UITable2               matlab.ui.control.Table
         UITable                matlab.ui.control.Table
+        
+        Player1 = gamePlayer("Player 1 Name", 1, 0, 1, 1, 0);
+        Player2 = gamePlayer("Player 2 Name", 2, 0, 1, 0, 0);
     end
 
 
@@ -47,6 +50,13 @@ classdef gameplay_public_exported < matlab.apps.AppBase
 
     % Callbacks that handle component events
     methods (Access = private)
+        
+        % Code that executes after component creation
+        function startupFcn(app)
+            %app.ScoreEditField.Value = 100;
+            %player1 = gamePlayer("Player 1 Name", 1, 0, 0, 1, 0);
+            %player2 = gamePlayer("Player 2 Name", 2, 0, 0, 0, 0);
+        end
 
         % Callback function
         function OptionsButtonPushed(app, event)
@@ -66,13 +76,46 @@ classdef gameplay_public_exported < matlab.apps.AppBase
 
         % Button pushed function: PlayagainButton
         function PlayagainButtonPushed(app, event)
-          gameScore = randi(1,1, 12)
-          
-          gameScore = rand(gameScore)
-            display(gameScore);
-            app.ScoreEditField.Value = gameScore
-            [y,Fs]=audioread("MANYDICE.wav")
-            sound(y,Fs)
+            %gameScore = randi(1,1, 12)
+            %gameScore = rand(gameScore)
+            
+            while app.Player1.playerTurn == 1
+                
+                % Roll the dice
+                [rollScore] = diceRoll(1);
+                
+                % Calculate the score for the round
+                [diceScore, gameScore] = scoreUpdate(rollScore);
+                
+                % Update the player score based on the dice roll
+                [playerScore] = updatePlayerScore(app.Player1.playerScore, diceScore);
+                
+                % Reset the player score if necessary (snake eyes rolled)
+                resetScore(app.Player1, gameScore);
+                
+                % Display the player score
+                app.ScoreEditField.Value = playerScore;
+                
+                % Increase the player round by 1
+                app.Player1.playerRoundNum = app.Player1.playerRoundNum + 1;
+                
+                % Make it the other player's turn if snake eye or eyes
+                % rolled
+                if gameScore == 0
+                    
+                    app.Player1.playerTurn = 0;
+                    app.Player2.playerTurn = 1;
+                    
+                else
+                end
+                
+            end
+            
+            %display(gameScore);
+            %app.ScoreEditField.Value = gameScore
+            
+            %[y,Fs] = audioread("MANYDICE.wav");
+            %sound(y,Fs)
         end
 
         % Value changed function: ScoreEditField
@@ -82,13 +125,46 @@ classdef gameplay_public_exported < matlab.apps.AppBase
 
         % Button pushed function: RollagainButton
         function RollagainButtonPushed(app, event)
-            gameScore = randi(1,1, 12)
-          
-          gameScore = rand(gameScore)
-            display(gameScore);
-            app.ScoreEditField_2.Value = gameScore
-            [y,Fs]=audioread("MANYDICE.wav")
-            sound(y,Fs)
+            %gameScore = randi(1,1, 12)
+            %gameScore = rand(gameScore)
+            
+            while app.Player2.playerTurn == 1
+                
+                % Roll the dice
+                [rollScore] = diceRoll(1);
+                
+                % Calculate the score for the round
+                [diceScore, gameScore] = scoreUpdate(rollScore);
+                
+                % Update the player score based on the dice roll
+                [playerScore] = updatePlayerScore(app.Player2.playerScore, diceScore);
+                
+                % Reset the player score if necessary (snake eyes rolled)
+                resetScore(app.Player2, gameScore);
+                
+                % Display the player score
+                app.ScoreEditField_2.Value = playerScore;
+                
+                % Increase the player round by 1
+                app.player2.playerRoundNum = app.player2.playerRoundNum + 1;
+                
+                % Make it the other player's turn if snake eye or eyes
+                % rolled
+                if gameScore == 0
+                    
+                    app.Player1.playerTurn = 1;
+                    app.Player2.playerTurn = 0;
+                    
+                else
+                end
+                
+            end
+            
+            %display(gameScore);
+            %app.ScoreEditField_2.Value = gameScore
+            
+            %[y,Fs] = audioread("MANYDICE.wav");
+            %sound(y,Fs)
         end
 
         % Value changed function: ScoreEditField_2
@@ -98,15 +174,19 @@ classdef gameplay_public_exported < matlab.apps.AppBase
 
         % Button pushed function: EndgameButton
         function EndgameButtonPushed(app, event)
+
             endgamescreen_exported
          [y,Fs]=audioread("endGame.wav")
+
             sound(y,Fs)   
         end
 
         % Button pushed function: EndGameButton
         function EndGameButtonPushed(app, event)
+
             endgamescreen_exported
             [y,Fs]=audioread("endGame.wav")
+
             sound(y,Fs)
         end
     end
@@ -216,6 +296,9 @@ classdef gameplay_public_exported < matlab.apps.AppBase
 
             % Register the app with App Designer
             registerApp(app, app.UIFigure)
+            
+            % Run the startup function
+            runStartupFcn(app, @startupFcn)
 
             if nargout == 0
                 clear app

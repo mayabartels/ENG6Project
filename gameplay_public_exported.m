@@ -82,7 +82,10 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 [diceScore, gameScore] = scoreUpdate(rollScore);
                 
                 % Update the player score based on the dice roll
-                [playerScore] = updatePlayerScore(app.Player1.playerRoundNum,app.Player1.playerScore, diceScore, app.PlayerRolls);
+                playerRoundNum = app.Player1.playerRoundNum;
+                currentScore = app.Player1.playerScore;
+                
+                [playerScore] = updatePlayerScore(playerRoundNum, currentScore, diceScore, app.PlayerRolls);
                 app.Player1.playerScore = playerScore;
                 disp(app.Player1.playerScore)
                 
@@ -135,7 +138,10 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 [diceScore, gameScore] = scoreUpdate(rollScore);
                 
                 % Update the player score based on the dice roll
-                [playerScore] = updatePlayerScore(app.Player2.playerRoundNum,app.Player2.playerScore, diceScore, app.PlayerRolls);
+                playerRoundNum = app.Player1.playerRoundNum;
+                currentScore = app.Player1.playerScore;
+                
+                [playerScore] = updatePlayerScore(playerRoundNum, currentScore, diceScore, app.PlayerRolls);
                 app.Player2.playerScore = playerScore;
                 disp(app.Player2.playerScore)
                 

@@ -18,8 +18,8 @@ classdef gameplay_public_exported < matlab.apps.AppBase
         UITable2               matlab.ui.control.Table
         UITable                matlab.ui.control.Table
         
-        Player1 = gamePlayer("Player 1 Name", 1, 0, 0, 1, 0);
-        Player2 = gamePlayer("Player 2 Name", 2, 0, 0, 0, 0);
+        Player1 = gamePlayer("Player 1 Name", 1, 0, 1, 1, 0);
+        Player2 = gamePlayer("Player 2 Name", 2, 0, 1, 0, 0);
     end
 
 
@@ -96,6 +96,9 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 % Display the player score
                 app.ScoreEditField.Value = playerScore;
                 
+                % Increase the player round by 1
+                app.player1.playerRoundNum = app.player1.playerRoundNum + 1;
+                
                 % Make it the other player's turn if snake eye or eyes
                 % rolled
                 if gameScore == 0
@@ -141,6 +144,9 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 
                 % Display the player score
                 app.ScoreEditField_2.Value = playerScore;
+                
+                % Increase the player round by 1
+                app.player2.playerRoundNum = app.player2.playerRoundNum + 1;
                 
                 % Make it the other player's turn if snake eye or eyes
                 % rolled

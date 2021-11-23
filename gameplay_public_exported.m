@@ -190,6 +190,9 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             app.Player1.playerTurn = ~app.Player1.playerTurn;
             app.Player2.playerTurn = ~app.Player2.playerTurn;
             
+            % Set the player rolls per round to zero again
+            app.PlayerRolls = 0;
+            
             % Create sound for the endgame screen
             [y,Fs] = audioread("endGame.wav");
             sound(y,Fs)   
@@ -202,6 +205,9 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             % Switch the player turn when pushed
             app.Player1.playerTurn = ~app.Player1.playerTurn;
             app.Player2.playerTurn = ~app.Player2.playerTurn;
+            
+            % Set the player rolls per round to zero again
+            app.PlayerRolls = 0;
             
             % Create sound for the endgame screen
             [y,Fs] = audioread("endGame.wav");

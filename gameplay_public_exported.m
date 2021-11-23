@@ -92,7 +92,7 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 % Display the player score and store it in the Player
                 % Scores Array
                 app.ScoreEditField.Value = playerScore;
-                app.Player1Scores(app.Player1.playerRoundNum) = diceScore
+                app.Player1Scores(app.Player1.playerRoundNum) = diceScore;
                 
                 % Increase the player round by 1
                 app.Player1.playerRoundNum = app.Player1.playerRoundNum + 1;
@@ -105,8 +105,8 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 if gameScore == 0
                     
                     % Switch the player turn
-                    app.Player1.playerTurn = 0
-                    app.Player2.playerTurn = 1
+                    app.Player1.playerTurn = 0;
+                    app.Player2.playerTurn = 1;
                     
                     % Set the player rolls per round to zero again
                     app.PlayerRolls = 0;
@@ -145,7 +145,7 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 % Display the player score and store the round score in the Player
                 % Scores Array
                 app.ScoreEditField_2.Value = playerScore;
-                app.Player2Scores(app.Player2.playerRoundNum) = diceScore
+                app.Player2Scores(app.Player2.playerRoundNum) = diceScore;
                 
                 % Increase the player round by 1
                 app.Player2.playerRoundNum = app.Player2.playerRoundNum + 1;
@@ -178,14 +178,26 @@ classdef gameplay_public_exported < matlab.apps.AppBase
 
         % Button pushed function: EndgameButton
         function EndgameButtonPushed(app, event)
-            endgamescreen
+            %endgamescreen
+            
+            % Switch the player turn when pushed
+            app.Player1.playerTurn = ~app.Player1.playerTurn;
+            app.Player2.playerTurn = ~app.Player2.playerTurn;
+            
+            % Create sound for the endgame screen
             [y,Fs] = audioread("endGame.wav");
             sound(y,Fs)   
         end
 
         % Button pushed function: EndGameButton
         function EndGameButtonPushed(app, event)
-            endgamescreen
+            %endgamescreen
+            
+            % Switch the player turn when pushed
+            app.Player1.playerTurn = ~app.Player1.playerTurn;
+            app.Player2.playerTurn = ~app.Player2.playerTurn;
+            
+            % Create sound for the endgame screen
             [y,Fs] = audioread("endGame.wav");
             sound(y,Fs)
         end

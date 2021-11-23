@@ -97,7 +97,7 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 app.ScoreEditField.Value = playerScore;
                 
                 % Increase the player round by 1
-                app.player1.playerRoundNum = app.player1.playerRoundNum + 1;
+                app.Player1.playerRoundNum = app.Player1.playerRoundNum + 1;
                 
                 % Make it the other player's turn if snake eye or eyes
                 % rolled

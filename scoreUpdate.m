@@ -1,7 +1,7 @@
 function [diceRollScore, gameScore]= scoreUpdate(rollScore)
 
-    diceOne = rollScore(1);
-    diceTwo = rollScore(2);
+    diceOne = rollScore(1)
+    diceTwo = rollScore(2)
 
 
    

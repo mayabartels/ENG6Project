@@ -21,6 +21,8 @@ classdef gameplay_public_exported < matlab.apps.AppBase
         Player1 = gamePlayer("Player 1 Name", 1, 0, 1, 1, 0); % Creating Player1 object
         Player2 = gamePlayer("Player 2 Name", 2, 0, 1, 0, 0); % Creating Player2 object
         PlayerRolls = 0;       % Used to track the number of rolls per turn for each player
+        Player1Scores = [];
+        Player2Scores = [];
     end
 
 
@@ -80,22 +82,23 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 [diceScore, gameScore] = scoreUpdate(rollScore);
                 
                 % Update the player score based on the dice roll
-                [playerScore] = updatePlayerScore(app.Player1.playerRoundNum, ...
-                    app.Player1.playerScore, diceScore, app.PlayerRolls);
+                [playerScore] = updatePlayerScore(app.Player1.playerRoundNum,app.Player1.playerScore, diceScore, app.PlayerRolls);
                 app.Player1.playerScore = playerScore;
                 disp(app.Player1.playerScore)
                 
                 % Reset the player score if necessary (snake eyes rolled)
                 resetScore(app.Player1, gameScore);
                 
-                % Display the player score
+                % Display the player score and store it in the Player
+                % Scores Array
                 app.ScoreEditField.Value = playerScore;
+                app.Player1Scores(app.Player1.playerRoundNum) = diceScore
                 
                 % Increase the player round by 1
                 app.Player1.playerRoundNum = app.Player1.playerRoundNum + 1;
                 
                 % Counts the number of rolls per round
-               app.PlayerRolls = app.PlayerRolls + 1;
+                app.PlayerRolls = app.PlayerRolls + 1;
                 
                 % Make it the other player's turn if snake eye or eyes
                 % rolled
@@ -132,22 +135,23 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 [diceScore, gameScore] = scoreUpdate(rollScore);
                 
                 % Update the player score based on the dice roll
-                [playerScore] = updatePlayerScore(app.Player2.playerRoundNum, ...
-                    app.Player2.playerScore, diceScore, app.PlayerRolls);
+                [playerScore] = updatePlayerScore(app.Player2.playerRoundNum,app.Player2.playerScore, diceScore, app.PlayerRolls);
                 app.Player2.playerScore = playerScore;
                 disp(app.Player2.playerScore)
                 
                 % Reset the player score if necessary (snake eyes rolled)
                 resetScore(app.Player2, gameScore);
                 
-                % Display the player score
+                % Display the player score and store the round score in the Player
+                % Scores Array
                 app.ScoreEditField_2.Value = playerScore;
+                app.Player2Scores(app.Player2.playerRoundNum) = diceScore
                 
                 % Increase the player round by 1
                 app.Player2.playerRoundNum = app.Player2.playerRoundNum + 1;
                 
                 % Counts the number of rolls per round
-               app.PlayerRolls = app.PlayerRolls + 1;
+                app.PlayerRolls = app.PlayerRolls + 1;
                 
                 % Make it the other player's turn if snake eye or eyes
                 % rolled

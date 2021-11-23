@@ -98,14 +98,14 @@ classdef gameplay_public_exported < matlab.apps.AppBase
 
         % Button pushed function: EndgameButton
         function EndgameButtonPushed(app, event)
-            endgamescreen
+            endgamescreen_exported
          [y,Fs]=audioread("endGame.wav")
             sound(y,Fs)   
         end
 
         % Button pushed function: EndGameButton
         function EndGameButtonPushed(app, event)
-            endgamescreen
+            endgamescreen_exported
             [y,Fs]=audioread("endGame.wav")
             sound(y,Fs)
         end

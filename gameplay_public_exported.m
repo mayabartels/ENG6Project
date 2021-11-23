@@ -20,6 +20,7 @@ classdef gameplay_public_exported < matlab.apps.AppBase
         
         Player1 = gamePlayer("Player 1 Name", 1, 0, 1, 1, 0);
         Player2 = gamePlayer("Player 2 Name", 2, 0, 1, 0, 0);
+        PlayerRolls = 0;
     end
 
 
@@ -50,13 +51,6 @@ classdef gameplay_public_exported < matlab.apps.AppBase
 
     % Callbacks that handle component events
     methods (Access = private)
-        
-        % Code that executes after component creation
-        function startupFcn(app)
-            %app.ScoreEditField.Value = 100;
-            %player1 = gamePlayer("Player 1 Name", 1, 0, 0, 1, 0);
-            %player2 = gamePlayer("Player 2 Name", 2, 0, 0, 0, 0);
-        end
 
         % Callback function
         function OptionsButtonPushed(app, event)
@@ -76,10 +70,8 @@ classdef gameplay_public_exported < matlab.apps.AppBase
 
         % Button pushed function: PlayagainButton
         function PlayagainButtonPushed(app, event)
-            %gameScore = randi(1,1, 12)
-            %gameScore = rand(gameScore)
             
-            while app.Player1.playerTurn == 1
+            if app.Player1.playerTurn == 1
                 
                 % Roll the dice
                 [rollScore] = diceRoll(1);
@@ -88,7 +80,10 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 [diceScore, gameScore] = scoreUpdate(rollScore);
                 
                 % Update the player score based on the dice roll
-                [playerScore] = updatePlayerScore(app.Player1.playerScore, diceScore);
+                [playerScore] = updatePlayerScore(app.Player1.playerRoundNum, ...
+                    app.Player1.playerScore, diceScore, app.PlayerRolls);
+                app.Player1.playerScore = playerScore;
+                disp(app.Player1.playerScore)
                 
                 % Reset the player score if necessary (snake eyes rolled)
                 resetScore(app.Player1, gameScore);
@@ -99,12 +94,19 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 % Increase the player round by 1
                 app.Player1.playerRoundNum = app.Player1.playerRoundNum + 1;
                 
+                % Counts the number of rolls per round
+               app.PlayerRolls = app.PlayerRolls + 1;
+                
                 % Make it the other player's turn if snake eye or eyes
                 % rolled
                 if gameScore == 0
                     
-                    app.Player1.playerTurn = 0;
-                    app.Player2.playerTurn = 1;
+                    % Switch the player turn
+                    app.Player1.playerTurn = 0
+                    app.Player2.playerTurn = 1
+                    
+                    % Set the player rolls per round to zero again
+                    app.PlayerRolls = 0;
                     
                 else
                 end
@@ -125,10 +127,8 @@ classdef gameplay_public_exported < matlab.apps.AppBase
 
         % Button pushed function: RollagainButton
         function RollagainButtonPushed(app, event)
-            %gameScore = randi(1,1, 12)
-            %gameScore = rand(gameScore)
             
-            while app.Player2.playerTurn == 1
+            if app.Player2.playerTurn == 1
                 
                 % Roll the dice
                 [rollScore] = diceRoll(1);
@@ -137,7 +137,10 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 [diceScore, gameScore] = scoreUpdate(rollScore);
                 
                 % Update the player score based on the dice roll
-                [playerScore] = updatePlayerScore(app.Player2.playerScore, diceScore);
+                [playerScore] = updatePlayerScore(app.Player2.playerRoundNum, ...
+                    app.Player2.playerScore, diceScore, app.PlayerRolls);
+                app.Player2.playerScore = playerScore;
+                disp(app.Player2.playerScore)
                 
                 % Reset the player score if necessary (snake eyes rolled)
                 resetScore(app.Player2, gameScore);
@@ -146,14 +149,21 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 app.ScoreEditField_2.Value = playerScore;
                 
                 % Increase the player round by 1
-                app.player2.playerRoundNum = app.player2.playerRoundNum + 1;
+                app.Player2.playerRoundNum = app.Player2.playerRoundNum + 1;
+                
+                % Counts the number of rolls per round
+               app.PlayerRolls = app.PlayerRolls + 1;
                 
                 % Make it the other player's turn if snake eye or eyes
                 % rolled
                 if gameScore == 0
                     
+                    % Switch the player turn
                     app.Player1.playerTurn = 1;
                     app.Player2.playerTurn = 0;
+                    
+                    % Set the player rolls per round to zero again
+                    app.PlayerRolls = 0;
                     
                 else
                 end
@@ -292,9 +302,6 @@ classdef gameplay_public_exported < matlab.apps.AppBase
 
             % Register the app with App Designer
             registerApp(app, app.UIFigure)
-            
-            % Run the startup function
-            runStartupFcn(app, @startupFcn)
 
             if nargout == 0
                 clear app

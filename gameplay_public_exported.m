@@ -18,8 +18,8 @@ classdef gameplay_public_exported < matlab.apps.AppBase
         UITable2               matlab.ui.control.Table
         UITable                matlab.ui.control.Table
         
-        Player1 = gamePlayer("Player 1 Name", 1, 0, 1, 1, 0); % Creating Player1 object
-        Player2 = gamePlayer("Player 2 Name", 2, 0, 1, 0, 0); % Creating Player2 object
+        Player1 = gamePlayer("Player 1 Name", 1, 0, 1, true, false); % Creating Player1 object
+        Player2 = gamePlayer("Player 2 Name", 2, 0, 1, false, false); % Creating Player2 object
         PlayerRolls = 0;       % Used to track the number of rolls per turn for each player
         Player1Scores = [];
         Player2Scores = [];
@@ -73,7 +73,7 @@ classdef gameplay_public_exported < matlab.apps.AppBase
         % Button pushed function: PlayagainButton
         function PlayagainButtonPushed(app, event)
             
-            if app.Player1.playerTurn == 1
+            if app.Player1.playerTurn
                 
                 % Roll the dice
                 [rollScore] = diceRoll(1);
@@ -108,8 +108,8 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 if gameScore == 0
                     
                     % Switch the player turn
-                    app.Player1.playerTurn = 0;
-                    app.Player2.playerTurn = 1;
+                    app.Player1.playerTurn = false;
+                    app.Player2.playerTurn = true;
                     
                     % Set the player rolls per round to zero again
                     app.PlayerRolls = 0;
@@ -129,7 +129,7 @@ classdef gameplay_public_exported < matlab.apps.AppBase
         % Button pushed function: RollagainButton
         function RollagainButtonPushed(app, event)
             
-            if app.Player2.playerTurn == 1
+            if app.Player2.playerTurn
                 
                 % Roll the dice
                 [rollScore] = diceRoll(1);
@@ -164,8 +164,8 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 if gameScore == 0
                     
                     % Switch the player turn
-                    app.Player1.playerTurn = 1;
-                    app.Player2.playerTurn = 0;
+                    app.Player1.playerTurn = true;
+                    app.Player2.playerTurn = false;
                     
                     % Set the player rolls per round to zero again
                     app.PlayerRolls = 0;

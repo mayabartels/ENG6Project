@@ -119,11 +119,9 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 
             end
             
-            %display(gameScore);
-            %app.ScoreEditField.Value = gameScore
+            [y,Fs] = audioread("MANYDICE.wav");
+            sound(y,Fs)
             
-            %[y,Fs] = audioread("MANYDICE.wav");
-            %sound(y,Fs)
         end
 
         % Button pushed function: RollagainButton
@@ -175,15 +173,14 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 
             end
             
-            %display(gameScore);
-            %app.ScoreEditField_2.Value = gameScore
+            [y,Fs] = audioread("MANYDICE.wav");
+            sound(y,Fs)
             
-            %[y,Fs] = audioread("MANYDICE.wav");
-            %sound(y,Fs)
         end
 
         % Button pushed function: EndgameButton
         function EndgameButtonPushed(app, event)
+        
             %endgamescreen
             
             % Switch the player turn when pushed
@@ -195,11 +192,16 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             
             % Create sound for the endgame screen
             [y,Fs] = audioread("endGame.wav");
-            sound(y,Fs)   
+
+            endgamescreen_exported
+            [y,Fs]=audioread("endGame.wav")
+            sound(y,Fs)
+            
         end
 
         % Button pushed function: EndGameButton
         function EndGameButtonPushed(app, event)
+
             %endgamescreen
             
             % Switch the player turn when pushed
@@ -211,7 +213,11 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             
             % Create sound for the endgame screen
             [y,Fs] = audioread("endGame.wav");
+            
+            endgamescreen_exported
+            [y,Fs]=audioread("endGame.wav")
             sound(y,Fs)
+            
         end
     end
 

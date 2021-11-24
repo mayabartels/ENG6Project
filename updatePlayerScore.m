@@ -1,13 +1,17 @@
-function [updateScore] = updatePlayerScore(currentRound, currentScore, roundScore, playerRolls)
+function [updateScore] = updatePlayerScore(scoreArray, currentRound, currentScore, roundScore, playerRolls)
     
     if roundScore == 0
-
-        updateScore = currentScore;
+        
         % Make it so that round scores are all subtracted off of the
         % currentScore
-        %previousRounds = scoreboard(currentRound:-1:playerRolls);
-        %sumRounds = sum(previousRounds);
-        %updateScore = currentScore - sumRounds;
+        firstRoundScore = currentRound - playerRolls;
+        disp(currentRound)
+        disp(playerRolls)
+        disp(firstRoundScore)
+        disp(scoreArray)
+        previousRounds = scoreArray((currentRound - 1):-1:firstRoundScore);
+        sumRounds = sum(previousRounds);
+        updateScore = currentScore - sumRounds;
         
     else
         

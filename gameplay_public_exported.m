@@ -92,10 +92,11 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 [diceScore, gameScore] = scoreUpdate(rollScore);
                 
                 % Update the player score based on the dice roll
+                scores = app.Player1Scores;
                 playerRoundNum = app.Player1.playerRoundNum;
                 currentScore = app.Player1.playerScore;
                 
-                [playerScore] = updatePlayerScore(playerRoundNum, currentScore, diceScore, app.PlayerRolls);
+                [playerScore] = updatePlayerScore(scores, playerRoundNum, currentScore, diceScore, app.PlayerRolls);
                 app.Player1.playerScore = playerScore;
                 disp(app.Player1.playerScore)
                 
@@ -156,10 +157,11 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 [diceScore, gameScore] = scoreUpdate(rollScore);
                 
                 % Update the player score based on the dice roll
-                playerRoundNum = app.Player1.playerRoundNum;
-                currentScore = app.Player1.playerScore;
+                scores = app.Player2Scores;
+                playerRoundNum = app.Player2.playerRoundNum;
+                currentScore = app.Player2.playerScore;
                 
-                [playerScore] = updatePlayerScore(playerRoundNum, currentScore, diceScore, app.PlayerRolls);
+                [playerScore] = updatePlayerScore(scores, playerRoundNum, currentScore, diceScore, app.PlayerRolls);
                 app.Player2.playerScore = playerScore;
                 disp(app.Player2.playerScore)
                 
@@ -213,9 +215,12 @@ classdef gameplay_public_exported < matlab.apps.AppBase
         
             %endgamescreen
             
-            % Switch the player turn when pushed
-            app.Player1.playerTurn = ~app.Player1.playerTurn;
-            app.Player2.playerTurn = ~app.Player2.playerTurn;
+            if app.Player1.playerTurn
+                % Switch the player turn when pushed
+                app.Player1.playerTurn = ~app.Player1.playerTurn;
+                app.Player2.playerTurn = ~app.Player2.playerTurn;
+            else
+            end
             
             % Set the player rolls per round to zero again
             app.PlayerRolls = 0;
@@ -234,9 +239,12 @@ classdef gameplay_public_exported < matlab.apps.AppBase
 
             %endgamescreen
             
-            % Switch the player turn when pushed
-            app.Player1.playerTurn = ~app.Player1.playerTurn;
-            app.Player2.playerTurn = ~app.Player2.playerTurn;
+            if app.Player2.playerTurn
+                % Switch the player turn when pushed
+                app.Player1.playerTurn = ~app.Player1.playerTurn;
+                app.Player2.playerTurn = ~app.Player2.playerTurn;
+            else
+            end
             
             % Set the player rolls per round to zero again
             app.PlayerRolls = 0;
@@ -262,10 +270,11 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 [diceScore, gameScore] = scoreUpdate(rollScore);
                 
                 % Update the player score based on the dice roll
+                scores = app.Player1Scores;
                 playerRoundNum = app.Player1.playerRoundNum;
                 currentScore = app.Player1.playerScore;
                 
-                [playerScore] = updatePlayerScore(playerRoundNum, currentScore, diceScore, app.PlayerRolls);
+                [playerScore] = updatePlayerScore(scores, playerRoundNum, currentScore, diceScore, app.PlayerRolls);
                 app.Player1.playerScore = playerScore;
                 disp(app.Player1.playerScore)
                 
@@ -321,10 +330,11 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 [diceScore, gameScore] = scoreUpdate(rollScore);
                 
                 % Update the player score based on the dice roll
-                playerRoundNum = app.Player1.playerRoundNum;
-                currentScore = app.Player1.playerScore;
+                scores = app.Player2Scores;
+                playerRoundNum = app.Player2.playerRoundNum;
+                currentScore = app.Player2.playerScore;
                 
-                [playerScore] = updatePlayerScore(playerRoundNum, currentScore, diceScore, app.PlayerRolls);
+                [playerScore] = updatePlayerScore(scores, playerRoundNum, currentScore, diceScore, app.PlayerRolls);
                 app.Player2.playerScore = playerScore;
                 disp(app.Player2.playerScore)
                 

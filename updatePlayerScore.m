@@ -5,10 +5,6 @@ function [updateScore] = updatePlayerScore(scoreArray, currentRound, currentScor
         % Make it so that round scores are all subtracted off of the
         % currentScore
         firstRoundScore = currentRound - playerRolls;
-        disp(currentRound)
-        disp(playerRolls)
-        disp(firstRoundScore)
-        disp(scoreArray)
         previousRounds = scoreArray((currentRound - 1):-1:firstRoundScore);
         sumRounds = sum(previousRounds);
         updateScore = currentScore - sumRounds;

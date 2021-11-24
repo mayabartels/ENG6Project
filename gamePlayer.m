@@ -6,10 +6,7 @@ classdef gamePlayer
         playerName;     % Name of the player object
         playerNum;      % {1,2} since game will be played by 1 or 2 players
         playerScore;    % Keep track of the score for each player object
-        dice1Roll;      % The value for the first roll of the dice per turn
-        dice2Roll;      % The value for the second roll of the dice per turn
-        
-        % These may or may not be necessary. They might be useful
+        playerRoundNum; % Keep track of the round number for each player
         playerTurn;     % Boolean value for if it is the player's turn
         playerWin;      % Boolean value for if the player won (1 = win, 0 = lose)
     end
@@ -17,31 +14,17 @@ classdef gamePlayer
     methods
         
         % Creating object method
-        function obj = gamePlayer()
+        function obj = gamePlayer(playerName, playerNum, playerScore, playerRoundNum, playerTurn, playerWin)
             
-            % Needs to be changed based on parameters put in gamePlayer
-            % function
-            
-        end
-        
-        % Determine the player score based on the dice roll
-        function [score] = scorePlayer(obj, roll1, roll2)
-            
-            % Total score for turn
-            turnScore = roll1 + roll2;
-            
-            % Add the turn score to the player score
-            score = obj.playerScore + turnScore;
-            
-        end
-        
-        % Reset score if the player rolls snake eyes
-        function [scoreReset] = resetScore(roll1, roll2)
-            
-            % Check if the rolls both equal 1 and set the score to 0
-            if (roll1 == 1 && roll2 == 1)
-                scoreReset = 0;
+            if nargin == 6
+                obj.playerName = playerName;
+                obj.playerNum = playerNum;
+                obj.playerScore = playerScore;
+                obj.playerRoundNum = playerRoundNum;
+                obj.playerTurn = playerTurn;
+                obj.playerWin = playerWin;
             else
+                disp("Input error message");
             end
             
         end

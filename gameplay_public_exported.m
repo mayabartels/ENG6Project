@@ -424,7 +424,7 @@ classdef gameplay_public_exported < matlab.apps.AppBase
         % Button pushed function: EndGameButton
         function EndGameButtonPushed(app, event)
             endgamescreen_exported
-            %rules_exported.Visible = 'off';
+            rules_exported.Visible = 'off';
         end
         
     end
@@ -534,6 +534,7 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             
             % Create EndGameButton
             app.EndGameButton = uibutton(app.UIFigure, 'push');
+            app.EndGameButton.ButtonPushedFcn = createCallbackFcn(app, @EndGameButtonPushed, true);
             app.EndGameButton.BackgroundColor = [0.9686 0.6902 0.6902];
             app.EndGameButton.Position = [177 27 188 32];
             app.EndGameButton.Text = 'End Game';

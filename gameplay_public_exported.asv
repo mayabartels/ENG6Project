@@ -69,7 +69,6 @@ classdef gameplay_public_exported < matlab.apps.AppBase
         set(app.Image2,'visible','on');
         set(app.Image3,'visible','off');
         set(app.Image4,'visible','off');
-
         %snake eyes animation:
         set(app.Image5,'visible','off');
         set(app.XButton,'visible','off');
@@ -150,18 +149,8 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                     % Display snake eyes or snake eye if either was rolled
                     if snakeEyes
                         set(app.SnakeEyesRolledLabel, 'visible', 'on');
-
-                         %Snake Eyes Image and close Button
-                     set(app.Image5,'visible','on');
-                     set(app.XButton,'visible','on');
-
                     elseif snakeEye
                         set(app.OneSnakeEyeRolledLabel, 'visible', 'on');
-
-                         %Snake Eyes Image and close Button
-                     set(app.Image5,'visible','on');
-                     set(app.XButton,'visible','on');
-                     
                     end
                     
                 else
@@ -471,12 +460,7 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             endgamescreen_exported
         end
 
-         % Button pushed function: XButton
-        function XButtonPushed(app, event)
-            %Snake Eyes Image and close Button-Turn off
-                     set(app.Image5,'visible','off');
-                     set(app.XButton,'visible','off');
-        end
+        
         
     end
 

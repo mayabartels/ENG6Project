@@ -62,10 +62,12 @@ classdef gameplay_public_exported < matlab.apps.AppBase
         % Code that executes after component creation
         function startupFcn(app, data)
 
+        %player icons and dice animation:
         set(app.Image,'visible','on');
         set(app.Image2,'visible','on');
         set(app.Image3,'visible','off');
         set(app.Image4,'visible','off');
+        %snake eyes animation:
         set(app.Image5,'visible','off');
         set(app.XButton,'visible','off');
 

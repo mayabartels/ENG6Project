@@ -62,6 +62,8 @@ classdef gameplay_public_exported < matlab.apps.AppBase
         set(app.Image2,'visible','on');
         set(app.Image3,'visible','off');
         set(app.Image4,'visible','off');
+        set(app.Image5,'visible','off');
+        set(app.XButton,'visible','off');
         end
         
         % Callback function
@@ -180,14 +182,17 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 % Make it the other player's turn if snake eye or eyes
                 % rolled
                 if gameScore == 0
-                    
+
                     % Switch the player turn
                     app.Player1.playerTurn = true;
                     app.Player2.playerTurn = false;
                     
                     % Set the player rolls per round to zero again
                     app.PlayerRolls = 0;
-                    
+
+                   %Snake Eyes Image and close Button
+                     set(app.Image5,'visible','on');
+                     set(app.XButton,'visible','on');
                 else
                 end
                 
@@ -294,6 +299,9 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                     % Set the player rolls per round to zero again
                     app.PlayerRolls = 0;
                     
+                    %Snake Eyes Image and close Button
+                     set(app.Image5,'visible','on');
+                     set(app.XButton,'visible','on');
                 else
                 end
                 
@@ -369,6 +377,7 @@ classdef gameplay_public_exported < matlab.apps.AppBase
         end
         
     end
+
 
     % Component initialization
     methods (Access = private)

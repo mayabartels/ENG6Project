@@ -424,7 +424,6 @@ classdef gameplay_public_exported < matlab.apps.AppBase
         % Button pushed function: EndGameButton
         function EndGameButtonPushed(app, event)
             endgamescreen_exported
-            rules_exported.Visible = 'off';
         end
         
     end

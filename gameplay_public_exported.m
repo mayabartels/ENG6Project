@@ -69,10 +69,7 @@ classdef gameplay_public_exported < matlab.apps.AppBase
         set(app.Image5,'visible','off');
         set(app.XButton,'visible','off');
 
-            set(app.Image,'visible','on');
-            set(app.Image2,'visible','on');
-            set(app.Image3,'visible','off');
-            set(app.Image4,'visible','off');
+            
             
             % Hide the snake eyes labels
             set(app.SnakeEyesRolledLabel, 'visible', 'off');

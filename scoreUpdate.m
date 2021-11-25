@@ -1,4 +1,4 @@
-function [diceRollScore, gameScore]= scoreUpdate(rollScore)
+function [diceRollScore, gameScore, snakeEyes, snakeEye]= scoreUpdate(rollScore)
 
     diceOne = rollScore(1)
     diceTwo = rollScore(2)
@@ -10,16 +10,28 @@ function [diceRollScore, gameScore]= scoreUpdate(rollScore)
         
         diceRollScore = 0
         gameScore = 0
+        
+        % Set Snake Eyes and Snake Eye to the correct boolean value
+        snakeEyes = false
+        snakeEye = true
   
-    elseif diceOne==1 & diceTwo==1 %if both dice are 1
+    elseif diceOne==1 && diceTwo==1 %if both dice are 1
         
         diceRollScore= 0
         gameScore= 0
+        
+        % Set Snake Eyes and Snake Eye to the correct boolean value
+        snakeEyes = true
+        snakeEye = false
 
     else % if neither dice is one
         
         diceRollScore= diceOne + diceTwo;
         gameScore= 1;
+        
+        % Set Snake Eyes and Snake Eye to the correct boolean value
+        snakeEyes = false;
+        snakeEye = false;
         
     end
     

@@ -19,6 +19,9 @@ classdef gameplay_public_exported < matlab.apps.AppBase
         Image3                 matlab.ui.control.Image
         Image4                 matlab.ui.control.Image
         RollAgainButton_2      matlab.ui.control.Button
+        EndGameButton           matlab.ui.control.Button
+        SnakeEyesRolledLabel    matlab.ui.control.Label
+        OneSnakeEyeRolledLabel  matlab.ui.control.Label
         
         Player1 = gamePlayer("Player 1 Name", 1, 0, 1, true, false); % Creating Player1 object
         Player2 = gamePlayer("Player 2 Name", 2, 0, 1, false, false); % Creating Player2 object
@@ -58,10 +61,14 @@ classdef gameplay_public_exported < matlab.apps.AppBase
 
         % Code that executes after component creation
         function startupFcn(app, data)
-        set(app.Image,'visible','on');
-        set(app.Image2,'visible','on');
-        set(app.Image3,'visible','off');
-        set(app.Image4,'visible','off');
+            set(app.Image,'visible','on');
+            set(app.Image2,'visible','on');
+            set(app.Image3,'visible','off');
+            set(app.Image4,'visible','off');
+            
+            % Hide the snake eyes labels
+            set(app.SnakeEyesRolledLabel, 'visible', 'off');
+            set(app.OneSnakeEyeRolledLabel, 'visible', 'off');
         end
         
         % Callback function
@@ -85,11 +92,15 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             
             if app.Player1.playerTurn && app.PlayerRolls == 0
                 
+                % Reset the snake eye labels to off when next roll happens
+                set(app.SnakeEyesRolledLabel, 'visible', 'off');
+                set(app.OneSnakeEyeRolledLabel, 'visible', 'off');
+                
                 % Roll the dice
                 [rollScore] = diceRoll(1);
                 
                 % Calculate the score for the round
-                [diceScore, gameScore] = scoreUpdate(rollScore);
+                [diceScore, gameScore, snakeEyes, snakeEye] = scoreUpdate(rollScore);
                 
                 % Update the player score based on the dice roll
                 scores = app.Player1Scores;
@@ -125,6 +136,13 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                     % Set the player rolls per round to zero again
                     app.PlayerRolls = 0;
                     
+                    % Display snake eyes or snake eye if either was rolled
+                    if snakeEyes
+                        set(app.SnakeEyesRolledLabel, 'visible', 'on');
+                    elseif snakeEye
+                        set(app.OneSnakeEyeRolledLabel, 'visible', 'on');
+                    end
+                    
                 else
                 end
                 
@@ -150,11 +168,15 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             
             if app.Player2.playerTurn && app.PlayerRolls == 0
                 
+                % Reset the snake eye labels to off when next roll happens
+                set(app.SnakeEyesRolledLabel, 'visible', 'off');
+                set(app.OneSnakeEyeRolledLabel, 'visible', 'off');
+                
                 % Roll the dice
                 [rollScore] = diceRoll(1);
                 
                 % Calculate the score for the round
-                [diceScore, gameScore] = scoreUpdate(rollScore);
+                [diceScore, gameScore, snakeEyes, snakeEye] = scoreUpdate(rollScore);
                 
                 % Update the player score based on the dice roll
                 scores = app.Player2Scores;
@@ -189,6 +211,13 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                     
                     % Set the player rolls per round to zero again
                     app.PlayerRolls = 0;
+                    
+                    % Display snake eyes or snake eye if either was rolled
+                    if snakeEyes
+                        set(app.SnakeEyesRolledLabel, 'visible', 'on');
+                    elseif snakeEye
+                        set(app.OneSnakeEyeRolledLabel, 'visible', 'on');
+                    end
                     
                 else
                 end
@@ -224,9 +253,6 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             
             % Set the player rolls per round to zero again
             app.PlayerRolls = 0;
-            
-            % Endgame screen code
-            %endgamescreen_exported
 
             % Audio commands
             [y,Fs] = audioread("endGame.wav");
@@ -236,8 +262,6 @@ classdef gameplay_public_exported < matlab.apps.AppBase
 
         % Button pushed function: EndGameButton
         function EndTurnButton_2Pushed(app, event)
-
-            %endgamescreen
             
             if app.Player2.playerTurn
                 % Switch the player turn when pushed
@@ -248,9 +272,6 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             
             % Set the player rolls per round to zero again
             app.PlayerRolls = 0;
-            
-            % Endgame screen code
-            %endgamescreen_exported
 
             % Audio commands
             [y,Fs] = audioread("endGame.wav");
@@ -263,11 +284,15 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             
             if app.Player1.playerTurn
                 
+                % Reset the snake eye labels to off when next roll happens
+                set(app.SnakeEyesRolledLabel, 'visible', 'off');
+                set(app.OneSnakeEyeRolledLabel, 'visible', 'off');
+                
                 % Roll the dice
                 [rollScore] = diceRoll(1);
                 
                 % Calculate the score for the round
-                [diceScore, gameScore] = scoreUpdate(rollScore);
+                [diceScore, gameScore, snakeEyes, snakeEye] = scoreUpdate(rollScore);
                 
                 % Update the player score based on the dice roll
                 scores = app.Player1Scores;
@@ -303,6 +328,13 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                     % Set the player rolls per round to zero again
                     app.PlayerRolls = 0;
                     
+                    % Display snake eyes or snake eye if either was rolled
+                    if snakeEyes
+                        set(app.SnakeEyesRolledLabel, 'visible', 'on');
+                    elseif snakeEye
+                        set(app.OneSnakeEyeRolledLabel, 'visible', 'on');
+                    end
+                    
                 else
                 end
                 
@@ -323,11 +355,15 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             
             if app.Player2.playerTurn
                 
+                % Reset the snake eye labels to off when next roll happens
+                set(app.SnakeEyesRolledLabel, 'visible', 'off');
+                set(app.OneSnakeEyeRolledLabel, 'visible', 'off');
+                
                 % Roll the dice
                 [rollScore] = diceRoll(1);
                 
                 % Calculate the score for the round
-                [diceScore, gameScore] = scoreUpdate(rollScore);
+                [diceScore, gameScore, snakeEyes, snakeEye] = scoreUpdate(rollScore);
                 
                 % Update the player score based on the dice roll
                 scores = app.Player2Scores;
@@ -363,6 +399,13 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                     % Set the player rolls per round to zero again
                     app.PlayerRolls = 0;
                     
+                    % Display snake eyes or snake eye if either was rolled
+                    if snakeEyes
+                        set(app.SnakeEyesRolledLabel, 'visible', 'on');
+                    elseif snakeEye
+                        set(app.OneSnakeEyeRolledLabel, 'visible', 'on');
+                    end
+                    
                 else
                 end
                 
@@ -376,6 +419,12 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             set(app.Image3,'visible','on');
             set(app.Image4,'visible','off');
             
+        end
+        
+        % Button pushed function: EndGameButton
+        function EndGameButtonPushed(app, event)
+            endgamescreen_exported
+            %rules_exported.Visible = 'off';
         end
         
     end
@@ -482,6 +531,26 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             app.RollAgainButton_2.ButtonPushedFcn = createCallbackFcn(app, @RollAgainButton_2Pushed, true);
             app.RollAgainButton_2.Position = [270 130 100 22];
             app.RollAgainButton_2.Text = 'Roll Again';
+            
+            % Create EndGameButton
+            app.EndGameButton = uibutton(app.UIFigure, 'push');
+            app.EndGameButton.BackgroundColor = [0.9686 0.6902 0.6902];
+            app.EndGameButton.Position = [177 27 188 32];
+            app.EndGameButton.Text = 'End Game';
+
+            % Create SnakeEyesRolledLabel
+            app.SnakeEyesRolledLabel = uilabel(app.UIFigure);
+            app.SnakeEyesRolledLabel.HorizontalAlignment = 'center';
+            app.SnakeEyesRolledLabel.FontColor = [1 0 0];
+            app.SnakeEyesRolledLabel.Position = [97 336 152 30];
+            app.SnakeEyesRolledLabel.Text = 'Snake Eyes Rolled!';
+
+            % Create OneSnakeEyeRolledLabel
+            app.OneSnakeEyeRolledLabel = uilabel(app.UIFigure);
+            app.OneSnakeEyeRolledLabel.HorizontalAlignment = 'center';
+            app.OneSnakeEyeRolledLabel.FontColor = [1 0 0];
+            app.OneSnakeEyeRolledLabel.Position = [97 336 152 30];
+            app.OneSnakeEyeRolledLabel.Text = 'One Snake Eye Rolled!';
 
             % Show the figure after all components are created
             app.UIFigure.Visible = 'on';
@@ -500,6 +569,9 @@ classdef gameplay_public_exported < matlab.apps.AppBase
 
             % Register the app with App Designer
             registerApp(app, app.UIFigure)
+            
+            % Execute the startup function
+            runStartupFcn(app, @startupFcn)
 
             if nargout == 0
                 clear app

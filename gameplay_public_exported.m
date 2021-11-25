@@ -161,7 +161,7 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                          %Snake Eyes Image and close Button
                      set(app.Image5,'visible','on');
                      set(app.XButton,'visible','on');
-                     
+
                     end
                     
                 else
@@ -469,6 +469,10 @@ classdef gameplay_public_exported < matlab.apps.AppBase
         % Button pushed function: EndGameButton
         function EndGameButtonPushed(app, event)
             endgamescreen_exported
+            
+             % Audio commands
+            [y,Fs] = audioread("winnerSound.mp3");
+            sound(y,Fs)
         end
 
          % Button pushed function: XButton

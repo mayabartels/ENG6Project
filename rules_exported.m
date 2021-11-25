@@ -13,7 +13,7 @@ classdef rules_exported < matlab.apps.AppBase
 
         % Button pushed function: StartGameButton
         function StartGameButtonPushed(app, event)
-            gameplay_public
+            gameplay_public_exported
         end
     end
 

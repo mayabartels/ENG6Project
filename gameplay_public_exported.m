@@ -227,11 +227,18 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 app.ScoreEditField.Value = playerScore;
                 app.Player1Scores(app.Player1.playerRoundNum) = diceScore;
                 
+                 %format data to display in table later
+                [data1]= getPlayer1Score(app.Player1.playerRoundNum, app.Player1Scores);
+               
+                
                 % Increase the player round by 1
                 app.Player1.playerRoundNum = app.Player1.playerRoundNum + 1;
                 
                 % Counts the number of rolls per round
                 app.PlayerRolls = app.PlayerRolls + 1;
+                
+              
+                app.UITable.Data= data1;
                 
                 % Make it the other player's turn if snake eye or eyes
                 % rolled
@@ -333,11 +340,18 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 app.ScoreEditField_2.Value = playerScore;
                 app.Player2Scores(app.Player2.playerRoundNum) = diceScore;
                 
+                %format data to display in table later
+                [data2]= getPlayer2Score(app.Player2.playerRoundNum, app.Player2Scores);
+                
                 % Increase the player round by 1
                 app.Player2.playerRoundNum = app.Player2.playerRoundNum + 1;
                 
                 % Counts the number of rolls per round
                 app.PlayerRolls = app.PlayerRolls + 1;
+                
+              
+                
+                app.UITable2.Data= data2;
                 
                 % Make it the other player's turn if snake eye or eyes
                 % rolled
@@ -469,6 +483,10 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 app.ScoreEditField.Value = playerScore;
                 app.Player1Scores(app.Player1.playerRoundNum) = diceScore;
                 
+                  %format data to display in table later
+                [data1]= getPlayer1Score(app.Player1.playerRoundNum, app.Player1Scores);
+               
+                app.UITable.Data=data1
                 % Increase the player round by 1
                 app.Player1.playerRoundNum = app.Player1.playerRoundNum + 1;
                 
@@ -559,6 +577,12 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 % Scores Array
                 app.ScoreEditField_2.Value = playerScore;
                 app.Player2Scores(app.Player2.playerRoundNum) = diceScore;
+                
+                  %format data to display in table later
+                [data2]= getPlayer2Score(app.Player2.playerRoundNum, app.Player2Scores);
+                
+                app.UITable2.Data=data2
+               
                 
                 % Increase the player round by 1
                 app.Player2.playerRoundNum = app.Player2.playerRoundNum + 1;

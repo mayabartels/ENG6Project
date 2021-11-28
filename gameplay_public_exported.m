@@ -721,17 +721,17 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             app.UIFigure.Name = 'Display Plot';
             app.UIFigure.CloseRequestFcn = createCallbackFcn(app, @MainAppCloseRequest, true);
 
-             % Create UITable
+              % Create UITable
             app.UITable = uitable(app.UIFigure);
             app.UITable.ColumnName = {'Round'; 'Score'};
             app.UITable.RowName = {};
-            app.UITable.Position = [379 207 146 157];
+            app.UITable.Position = [372 202 161 167];
 
             % Create UITable2
             app.UITable2 = uitable(app.UIFigure);
             app.UITable2.ColumnName = {'Round'; 'Score'};
             app.UITable2.RowName = {};
-            app.UITable2.Position = [379 27 146 171];
+            app.UITable2.Position = [373 15 161 177];
 
             % Create RollButton_2
             app.RollButton_2 = uibutton(app.UIFigure, 'push');

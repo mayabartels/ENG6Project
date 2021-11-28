@@ -10,14 +10,26 @@ classdef endgamescreen_exported < matlab.apps.AppBase
         WinnerEditFieldLabel  matlab.ui.control.Label
         Label                 matlab.ui.control.Label
         ENDGAMELabel          matlab.ui.control.Label
+        PlayAgainButton       matlab.ui.control.Button
     end
 
     % Callbacks that handle component events
     methods (Access = private)
+        
+        % Code that executes after component creation
+        function startupFcn(app)
+            
+        end
 
         % Value changing function: WinnerEditField
         function WinnerEditFieldValueChanging(app, event)
             %NEED TO FILL
+        end
+        
+        % Button pushed function: PlayAgainButton
+        function PlayAgainButtonPushed(app, event)
+            gameplay_public_exported
+            close(app.UIFigure)
         end
     end
 
@@ -37,7 +49,7 @@ classdef endgamescreen_exported < matlab.apps.AppBase
             app.ENDGAMELabel = uilabel(app.UIFigure);
             app.ENDGAMELabel.FontName = 'Hoefler Text';
             app.ENDGAMELabel.FontSize = 75;
-            app.ENDGAMELabel.Position = [127 303 446 76];
+            app.ENDGAMELabel.Position = [127 292 410 87];
             app.ENDGAMELabel.Text = 'END GAME';
 
             % Create Label
@@ -48,17 +60,17 @@ classdef endgamescreen_exported < matlab.apps.AppBase
             % Create WinnerEditFieldLabel
             app.WinnerEditFieldLabel = uilabel(app.UIFigure);
             app.WinnerEditFieldLabel.HorizontalAlignment = 'right';
-            app.WinnerEditFieldLabel.Position = [238 230 46 22];
+            app.WinnerEditFieldLabel.Position = [169 263 46 22];
             app.WinnerEditFieldLabel.Text = 'Winner:';
 
             % Create WinnerEditField
             app.WinnerEditField = uieditfield(app.UIFigure, 'text');
             app.WinnerEditField.ValueChangingFcn = createCallbackFcn(app, @WinnerEditFieldValueChanging, true);
-            app.WinnerEditField.Position = [299 230 100 22];
+            app.WinnerEditField.Position = [230 263 100 22];
 
-              % Create Image
+            % Create Image
             app.Image = uiimage(app.UIFigure);
-            app.Image.Position = [16 113 210 204];
+            app.Image.Position = [16 60 210 204];
             app.Image.ImageSource = 'winnerSnakeGif.gif';
 
             % Create Image2
@@ -68,9 +80,14 @@ classdef endgamescreen_exported < matlab.apps.AppBase
 
             % Create Image3
             app.Image3 = uiimage(app.UIFigure);
-            app.Image3.Position = [377 47 215 192];
+            app.Image3.Position = [409 66 215 192];
             app.Image3.ImageSource = 'Congratulations.gif';
 
+            % Create PlayAgainButton
+            app.PlayAgainButton = uibutton(app.UIFigure, 'push');
+            app.PlayAgainButton.Position = [388 263 100 22];
+            app.PlayAgainButton.ButtonPushedFcn = createCallbackFcn(app, @PlayAgainButtonPushed, true);
+            app.PlayAgainButton.Text = 'Play Again';
 
             % Show the figure after all components are created
             app.UIFigure.Visible = 'on';
@@ -88,6 +105,9 @@ classdef endgamescreen_exported < matlab.apps.AppBase
 
             % Register the app with App Designer
             registerApp(app, app.UIFigure)
+            
+            % Execute the startup function
+            runStartupFcn(app, @startupFcn)
 
             if nargout == 0
                 clear app

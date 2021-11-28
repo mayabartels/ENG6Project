@@ -8,6 +8,14 @@ classdef rules_exported < matlab.apps.AppBase
         StartGameButton  matlab.ui.control.Button
         Label            matlab.ui.control.Label
         RulesLabel       matlab.ui.control.Label
+        Player1NameEditFieldLabel  matlab.ui.control.Label
+        Player1NameEditField       matlab.ui.control.EditField
+        Player2NameEditFieldLabel  matlab.ui.control.Label
+        Player2NameEditField       matlab.ui.control.EditField
+        
+        % Temporarily Store Names
+        Player1Name
+        Player2Name
     end
 
     % Callbacks that handle component events
@@ -15,11 +23,30 @@ classdef rules_exported < matlab.apps.AppBase
 
         % Button pushed function: StartGameButton
         function StartGameButtonPushed(app, event)
+            % Open gameplay screen and close Rules
             gameplay_public_exported
+            close(app.UIFigure)
+            
+            % Make accessible by gameplay script
+            %app.rules_exported = rulesScreen;
 
             % Audio commands
             [y,Fs] = audioread("snakeHiss.wav");
             sound(y,Fs)
+        end
+        
+        % Value changed function: Player1NameEditField
+        function Player1NameEditFieldValueChanged(app, event)
+            app.Player1Name = app.Player1NameEditField.Value;
+            disp(app.Player1Name)
+            
+        end
+
+        % Value changed function: Player2NameEditField
+        function Player2NameEditFieldValueChanged(app, event)
+            app.Player2Name = app.Player2NameEditField.Value;
+            disp(app.Player2Name)
+            
         end
     end
 
@@ -71,6 +98,27 @@ classdef rules_exported < matlab.apps.AppBase
             app.Image2.Position = [431 8 177 139];
             app.Image2.ImageSource = 'SnakeEyesGif.gif';
 
+             % Create Player1NameEditFieldLabel
+            app.Player1NameEditFieldLabel = uilabel(app.UIFigure);
+            app.Player1NameEditFieldLabel.HorizontalAlignment = 'right';
+            app.Player1NameEditFieldLabel.Position = [408 410 85 22];
+            app.Player1NameEditFieldLabel.Text = 'Player 1 Name';
+
+            % Create Player1NameEditField
+            app.Player1NameEditField = uieditfield(app.UIFigure, 'text');
+            app.Player1NameEditField.ValueChangedFcn = createCallbackFcn(app, @Player1NameEditFieldValueChanged, true);
+            app.Player1NameEditField.Position = [508 410 100 22];
+
+            % Create Player2NameEditFieldLabel
+            app.Player2NameEditFieldLabel = uilabel(app.UIFigure);
+            app.Player2NameEditFieldLabel.HorizontalAlignment = 'right';
+            app.Player2NameEditFieldLabel.Position = [408 377 85 22];
+            app.Player2NameEditFieldLabel.Text = 'Player 2 Name';
+
+            % Create Player2NameEditField
+            app.Player2NameEditField = uieditfield(app.UIFigure, 'text');
+            app.Player2NameEditField.ValueChangedFcn = createCallbackFcn(app, @Player2NameEditFieldValueChanged, true);
+            app.Player2NameEditField.Position = [508 377 100 22];
 
             % Show the figure after all components are created
             app.UIFigure.Visible = 'on';

@@ -540,8 +540,18 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                     % Display snake eyes or snake eye if either was rolled
                     if snakeEyes
                         set(app.SnakeEyesRolledLabel, 'visible', 'on');
+
+                          %Snake Eyes Image and close Button
+                     set(app.Image5,'visible','on');
+                     set(app.XButton,'visible','on');
+
                     elseif snakeEye
                         set(app.OneSnakeEyeRolledLabel, 'visible', 'on');
+
+                          %Snake Eyes Image and close Button
+                     set(app.Image5,'visible','on');
+                     set(app.XButton,'visible','on');
+                     
                     end
                     
                 else

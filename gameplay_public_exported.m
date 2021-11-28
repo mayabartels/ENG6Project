@@ -236,12 +236,20 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                      set(app.Image5,'visible','on');
                      set(app.XButton,'visible','on');
 
+                     % Audio commands
+            [y,Fs] = audioread("snakeHiss.wav");
+            sound(y,Fs)
+
                     elseif snakeEye
                         set(app.OneSnakeEyeRolledLabel, 'visible', 'on');
 
                          %Snake Eyes Image and close Button
                      set(app.Image5,'visible','on');
                      set(app.XButton,'visible','on');
+
+                     % Audio commands
+            [y,Fs] = audioread("snakeHiss.wav");
+            sound(y,Fs)
 
                     end
                     
@@ -335,12 +343,20 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                      set(app.Image5,'visible','on');
                      set(app.XButton,'visible','on');
 
+                     % Audio commands
+            [y,Fs] = audioread("snakeHiss.wav");
+            sound(y,Fs)
+
                     elseif snakeEye
                         set(app.OneSnakeEyeRolledLabel, 'visible', 'on');
 
                    %Snake Eyes Image and close Button
                      set(app.Image5,'visible','on');
                      set(app.XButton,'visible','on');
+
+                     % Audio commands
+            [y,Fs] = audioread("snakeHiss.wav");
+            sound(y,Fs)
 
                     end
                     
@@ -463,12 +479,20 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                      set(app.Image5,'visible','on');
                      set(app.XButton,'visible','on');
 
+                     % Audio commands
+            [y,Fs] = audioread("snakeHiss.wav");
+            sound(y,Fs)
+
                     elseif snakeEye
                         set(app.OneSnakeEyeRolledLabel, 'visible', 'on');
                         
                         %Snake Eyes Image and close Button
                      set(app.Image5,'visible','on');
                      set(app.XButton,'visible','on');
+
+                     % Audio commands
+            [y,Fs] = audioread("snakeHiss.wav");
+            sound(y,Fs)
 
                     end
                     
@@ -545,13 +569,21 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                      set(app.Image5,'visible','on');
                      set(app.XButton,'visible','on');
 
+                      % Audio commands
+            [y,Fs] = audioread("snakeHiss.wav");
+            sound(y,Fs)
+
                     elseif snakeEye
                         set(app.OneSnakeEyeRolledLabel, 'visible', 'on');
 
                           %Snake Eyes Image and close Button
                      set(app.Image5,'visible','on');
                      set(app.XButton,'visible','on');
-                     
+
+                     % Audio commands
+            [y,Fs] = audioread("snakeHiss.wav");
+            sound(y,Fs)
+
                     end
                     
                 else

@@ -12,14 +12,10 @@ classdef rules_exported < matlab.apps.AppBase
         Player1NameEditField       matlab.ui.control.EditField
         Player2NameEditFieldLabel  matlab.ui.control.Label
         Player2NameEditField       matlab.ui.control.EditField
-        
-        % Temporarily Store Names
-        Player1Name
-        Player2Name
     end
 
     % Callbacks that handle component events
-    methods (Access = private)
+    methods (Access = public)
 
         % Button pushed function: StartGameButton
         function StartGameButtonPushed(app, event)
@@ -37,16 +33,14 @@ classdef rules_exported < matlab.apps.AppBase
         
         % Value changed function: Player1NameEditField
         function Player1NameEditFieldValueChanged(app, event)
-            app.Player1Name = app.Player1NameEditField.Value;
-            disp(app.Player1Name)
-            
+            global player1Name
+            player1Name = app.Player1NameEditField.Value;
         end
 
         % Value changed function: Player2NameEditField
         function Player2NameEditFieldValueChanged(app, event)
-            app.Player2Name = app.Player2NameEditField.Value;
-            disp(app.Player2Name)
-            
+            global player2Name
+            player2Name = app.Player2NameEditField.Value;
         end
     end
 

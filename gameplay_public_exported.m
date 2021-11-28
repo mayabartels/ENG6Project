@@ -37,6 +37,19 @@ classdef gameplay_public_exported < matlab.apps.AppBase
         DialogApp                   % Dialog box app
         CurrentSize = 35;           % Surface sample size
         CurrentColormap = 'Parula'; % Colormap
+        
+        myPlayerNum 
+        otherPlayerNum 
+        
+        channelID 
+        writeKey 
+        readKey   
+        readDelay 
+        writeDelay  
+        
+        roll  
+        myLastRoll  
+        otherLastRoll
     end
 
     methods (Access = public)
@@ -55,6 +68,55 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             app.OptionsButton.Enable = 'on';
         end
         
+        function [] = WaitForOtherPlayer(app)
+            playerWhoSentMsg = 0;
+            
+            while playerWhoSentMsg ~= app.otherPlayerNum
+                % read a data table from the channel
+                dataTable = thingSpeakRead(app.channelID, 'Fields', 1, 'ReadKey', ...
+                    app.readKey, 'OutputFormat','Table');
+                              
+                % access the entry in the table containing the data string
+                dataString = string(dataTable.dataString(1));
+                
+                % to help with debugging
+                disp("I am player " + num2str(app.myPlayerNum) ...
+                    + " and I just read this data from the ThingSpeak channel:");
+                disp(dataString);
+                
+                % split data string into separate numbers
+                dataParts = split(strip(dataString));
+                
+                % the first number in the string should 
+                % always be the number of the player who
+                % last wrote the data
+                playerWhoSentMsg = str2num(dataParts(1));
+                
+                % delay before trying to read the online channel again
+                pause(app.readDelay);              
+            end
+        end  
+        
+        function [] = ClearThinkSpeakChannel(app)
+            thingSpeakWrite(app.channelID, 'Fields', 1, 'Values', "0", 'WriteKey', app.writeKey);
+        end
+
+        function [] = SendDataToOtherPlayer(app)
+            pause(app.writeDelay);
+            dataString = strcat(string(app.myPlayerNum), " ", ...
+                string(app.myLastRoll.suit), " ", ...
+                string(app.myLastRoll.num), " ");
+            
+            rollString = app.MakeStringFromRoll(app.roll);
+            dataString = strcat(dataString, rollString);
+            
+            disp("I sent this data to the ThingSpeak channel: ");
+            disp(dataString);
+            
+            thingSpeakWrite(app.channelID, 'Fields', 1, 'Values', dataString ...
+                ,'WriteKey', app.writeKey); 
+        end
+        
     end
     
 
@@ -64,21 +126,40 @@ classdef gameplay_public_exported < matlab.apps.AppBase
         % Code that executes after component creation
         function startupFcn(app, data)
 
-        %player icons and dice animation:
-        set(app.Image,'visible','on');
-        set(app.Image2,'visible','on');
-        set(app.Image3,'visible','off');
-        set(app.Image4,'visible','off');
+            %player icons and dice animation:
+            set(app.Image,'visible','on');
+            set(app.Image2,'visible','on');
+            set(app.Image3,'visible','off');
+            set(app.Image4,'visible','off');
 
-        %snake eyes animation:
-        set(app.Image5,'visible','off');
-        set(app.XButton,'visible','off');
-
-            
+            %snake eyes animation:
+            set(app.Image5,'visible','off');
+            set(app.XButton,'visible','off');
             
             % Hide the snake eyes labels
             set(app.SnakeEyesRolledLabel, 'visible', 'off');
             set(app.OneSnakeEyeRolledLabel, 'visible', 'off');
+            
+            app.myPlayerNum = 1;
+            app.otherPlayerNum = 2;
+
+            app.channelID = 1580913;
+            app.writeKey = "P8W9ZHP2WOD6RP3Y";
+            app.readKey = "I8DVSH0CY0H0AV1X";
+
+            app.readDelay = 5;
+            app.writeDelay = 1;
+            app.ClearThinkSpeakChannel();
+            set(app.RollButton, 'Enable', 'off');
+
+            %%% Must fix following
+             % if app.snakeyes.player1 = valuechanged
+             %    app.myPlayerNum = 1;
+             %    app.otherPlayerNum = 2;
+             % else
+             %    app.myPlayerNum = 2;
+             %   app.otherPlayerNum = 1;
+             % end
 
         end
         
@@ -186,6 +267,18 @@ classdef gameplay_public_exported < matlab.apps.AppBase
 
         % Button pushed function: RollagainButton
         function RollButtonPushed(app, event)
+            
+            if (app.myPlayerNum == 1)
+                set(app.RollButton, 'Enable', 'on');
+                set(app.RollAgainButton_2, 'Enable', 'on')
+                set(app.EndTurnButton_2, 'Enable', 'on')
+                
+            else % app.myPlayerNum == 2
+                app.WaitForOtherPlayer();
+                set(app.RollButton_2, 'Enable', 'on');
+                set(app.RollAgainButton_3, 'Enable', 'on' );
+                set(app.EndTurnButton_3, 'Enable', 'on');
+            end
             
             if app.Player2.playerTurn && app.PlayerRolls == 0
                 

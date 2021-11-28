@@ -16,6 +16,10 @@ classdef rules_exported < matlab.apps.AppBase
         % Button pushed function: StartGameButton
         function StartGameButtonPushed(app, event)
             gameplay_public_exported
+
+            % Audio commands
+            [y,Fs] = audioread("snakeHiss.wav");
+            sound(y,Fs)
         end
     end
 

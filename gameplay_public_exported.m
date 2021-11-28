@@ -144,6 +144,11 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             set(app.SnakeEyesRolledLabel, 'visible', 'off');
             set(app.OneSnakeEyeRolledLabel, 'visible', 'off');
             
+            % Switch dice placement for image
+            % Image visualization commands
+            set(app.Image3,'visible','off');
+            set(app.Image4,'visible','on');
+            
             % Get player names
             global player1Name
             global player2Name
@@ -227,15 +232,14 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 
                  %format data to display in table later
                 [data1]= getPlayer1Score(app.Player1.playerRoundNum, app.Player1Scores);
-               
                 
                 % Increase the player round by 1
                 app.Player1.playerRoundNum = app.Player1.playerRoundNum + 1;
                 
                 % Counts the number of rolls per round
                 app.PlayerRolls = app.PlayerRolls + 1;
-                
               
+                % Update table with score data
                 app.UITable.Data= data1;
                 
                 % Make it the other player's turn if snake eye or eyes
@@ -249,28 +253,35 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                     % Set the player rolls per round to zero again
                     app.PlayerRolls = 0;
                     
+                    % Switch dice placement for image
+                    % Image visualization commands
+                    set(app.Image3,'visible','on');
+                    set(app.Image4,'visible','off');
+                    
                     % Display snake eyes or snake eye if either was rolled
                     if snakeEyes
+                        
                         set(app.SnakeEyesRolledLabel, 'visible', 'on');
 
-                         %Snake Eyes Image and close Button
-                     set(app.Image5,'visible','on');
-                     set(app.XButton,'visible','on');
+                        %Snake Eyes Image and close Button
+                        set(app.Image5,'visible','on');
+                        set(app.XButton,'visible','on');
 
-                     % Audio commands
-            [y,Fs] = audioread("snakeHiss.wav");
-            sound(y,Fs)
+                        % Audio commands
+                        [y,Fs] = audioread("snakeHiss.wav");
+                        sound(y,Fs)
 
                     elseif snakeEye
+                        
                         set(app.OneSnakeEyeRolledLabel, 'visible', 'on');
 
                          %Snake Eyes Image and close Button
-                     set(app.Image5,'visible','on');
-                     set(app.XButton,'visible','on');
+                        set(app.Image5,'visible','on');
+                        set(app.XButton,'visible','on');
 
-                     % Audio commands
-            [y,Fs] = audioread("snakeHiss.wav");
-            sound(y,Fs)
+                        % Audio commands
+                        [y,Fs] = audioread("snakeHiss.wav");
+                        sound(y,Fs)
 
                     end
                     
@@ -282,10 +293,6 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             % Audio commands
             [y,Fs] = audioread("MANYDICE.wav");
             sound(y,Fs)
-
-            % Image visibility commands
-            set(app.Image4,'visible','on');
-            set(app.Image3,'visible','off');
             
         end
         
@@ -347,8 +354,7 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 % Counts the number of rolls per round
                 app.PlayerRolls = app.PlayerRolls + 1;
                 
-              
-                
+                % Update table with score data
                 app.UITable2.Data= data2;
                 
                 % Make it the other player's turn if snake eye or eyes
@@ -361,33 +367,37 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                     
                     % Set the player rolls per round to zero again
                     app.PlayerRolls = 0;
-
+                    
+                    % Switch dice placement for image
+                    % Image visualization commands
+                    set(app.Image3,'visible','off');
+                    set(app.Image4,'visible','on');
                     
                     % Display snake eyes or snake eye if either was rolled
                     if snakeEyes
+                        
                         set(app.SnakeEyesRolledLabel, 'visible', 'on');
 
-                   %Snake Eyes Image and close Button
-                     set(app.Image5,'visible','on');
-                     set(app.XButton,'visible','on');
+                        %Snake Eyes Image and close Button
+                        set(app.Image5,'visible','on');
+                        set(app.XButton,'visible','on');
 
-                     % Audio commands
-            [y,Fs] = audioread("snakeHiss.wav");
-            sound(y,Fs)
+                        % Audio commands
+                        [y,Fs] = audioread("snakeHiss.wav");
+                        sound(y,Fs)
 
                     elseif snakeEye
                         set(app.OneSnakeEyeRolledLabel, 'visible', 'on');
 
-                   %Snake Eyes Image and close Button
-                     set(app.Image5,'visible','on');
-                     set(app.XButton,'visible','on');
+                        %Snake Eyes Image and close Button
+                        set(app.Image5,'visible','on');
+                        set(app.XButton,'visible','on');
 
-                     % Audio commands
-            [y,Fs] = audioread("snakeHiss.wav");
-            sound(y,Fs)
+                        % Audio commands
+                        [y,Fs] = audioread("snakeHiss.wav");
+                        sound(y,Fs)
 
                     end
-                    
 
                 else
                 end
@@ -397,10 +407,6 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             % Audio commands
             [y,Fs]=audioread("MANYDICE.wav");
             sound(y,Fs)
-                
-            % Image visibility commands
-            set(app.Image3,'visible','on');
-            set(app.Image4,'visible','off');
             
         end
         
@@ -411,13 +417,18 @@ classdef gameplay_public_exported < matlab.apps.AppBase
 
         % Button pushed function: EndgameButton
         function EndTurnButton_3Pushed(app, event)
-        
-            %endgamescreen
             
             if app.Player1.playerTurn
+                
                 % Switch the player turn when pushed
                 app.Player1.playerTurn = ~app.Player1.playerTurn;
                 app.Player2.playerTurn = ~app.Player2.playerTurn;
+                
+                % Switch dice placement for image
+                % Image visualization commands
+                set(app.Image3,'visible','on');
+                set(app.Image4,'visible','off');
+                
             else
             end
             
@@ -434,9 +445,16 @@ classdef gameplay_public_exported < matlab.apps.AppBase
         function EndTurnButton_2Pushed(app, event)
             
             if app.Player2.playerTurn
+                
                 % Switch the player turn when pushed
                 app.Player1.playerTurn = ~app.Player1.playerTurn;
                 app.Player2.playerTurn = ~app.Player2.playerTurn;
+                
+                % Switch dice placement for image
+                % Image visualization commands
+                set(app.Image3,'visible','off');
+                set(app.Image4,'visible','on');
+                
             else
             end
             
@@ -481,10 +499,12 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 app.ScoreEditField.Value = playerScore;
                 app.Player1Scores(app.Player1.playerRoundNum) = diceScore;
                 
-                  %format data to display in table later
+                %format data to display in table later
                 [data1]= getPlayer1Score(app.Player1.playerRoundNum, app.Player1Scores);
                
-                app.UITable.Data=data1
+                % Update table with score data
+                app.UITable.Data = data1;
+                
                 % Increase the player round by 1
                 app.Player1.playerRoundNum = app.Player1.playerRoundNum + 1;
                 
@@ -502,32 +522,37 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                     % Set the player rolls per round to zero again
                     app.PlayerRolls = 0;
                     
+                    % Switch dice placement for image
+                    % Image visualization commands
+                    set(app.Image3,'visible','on');
+                    set(app.Image4,'visible','off');
 
                     % Display snake eyes or snake eye if either was rolled
                     if snakeEyes
+                        
                         set(app.SnakeEyesRolledLabel, 'visible', 'on');
 
-                         %Snake Eyes Image and close Button
-                     set(app.Image5,'visible','on');
-                     set(app.XButton,'visible','on');
+                        %Snake Eyes Image and close Button
+                        set(app.Image5,'visible','on');
+                        set(app.XButton,'visible','on');
 
-                     % Audio commands
-            [y,Fs] = audioread("snakeHiss.wav");
-            sound(y,Fs)
+                        % Audio commands
+                        [y,Fs] = audioread("snakeHiss.wav");
+                        sound(y,Fs)
 
                     elseif snakeEye
+                        
                         set(app.OneSnakeEyeRolledLabel, 'visible', 'on');
                         
                         %Snake Eyes Image and close Button
-                     set(app.Image5,'visible','on');
-                     set(app.XButton,'visible','on');
+                        set(app.Image5,'visible','on');
+                        set(app.XButton,'visible','on');
 
-                     % Audio commands
-            [y,Fs] = audioread("snakeHiss.wav");
-            sound(y,Fs)
+                        % Audio commands
+                        [y,Fs] = audioread("snakeHiss.wav");
+                        sound(y,Fs)
 
                     end
-                    
 
                 else
                 end
@@ -537,10 +562,6 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             % Audio commands
             [y,Fs] = audioread("MANYDICE.wav");
             sound(y,Fs)
-           
-            % Image visualization commands
-            set(app.Image4,'visible','on');
-            set(app.Image3,'visible','off');
            
         end
 
@@ -576,11 +597,11 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 app.ScoreEditField_2.Value = playerScore;
                 app.Player2Scores(app.Player2.playerRoundNum) = diceScore;
                 
-                  %format data to display in table later
+                %format data to display in table later
                 [data2]= getPlayer2Score(app.Player2.playerRoundNum, app.Player2Scores);
                 
-                app.UITable2.Data=data2
-               
+                % Update table with score data
+                app.UITable2.Data = data2;
                 
                 % Increase the player round by 1
                 app.Player2.playerRoundNum = app.Player2.playerRoundNum + 1;
@@ -599,28 +620,35 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                     % Set the player rolls per round to zero again
                     app.PlayerRolls = 0;
                     
+                    % Switch dice placement for image
+                    % Image visualization commands
+                    set(app.Image3,'visible','off');
+                    set(app.Image4,'visible','on');
+                    
                     % Display snake eyes or snake eye if either was rolled
                     if snakeEyes
+                        
                         set(app.SnakeEyesRolledLabel, 'visible', 'on');
 
-                          %Snake Eyes Image and close Button
-                     set(app.Image5,'visible','on');
-                     set(app.XButton,'visible','on');
+                        %Snake Eyes Image and close Button
+                        set(app.Image5,'visible','on');
+                        set(app.XButton,'visible','on');
 
-                      % Audio commands
-            [y,Fs] = audioread("snakeHiss.wav");
-            sound(y,Fs)
+                        % Audio commands
+                        [y,Fs] = audioread("snakeHiss.wav");
+                        sound(y,Fs)
 
                     elseif snakeEye
+                        
                         set(app.OneSnakeEyeRolledLabel, 'visible', 'on');
 
-                          %Snake Eyes Image and close Button
-                     set(app.Image5,'visible','on');
-                     set(app.XButton,'visible','on');
+                        %Snake Eyes Image and close Button
+                        set(app.Image5,'visible','on');
+                        set(app.XButton,'visible','on');
 
-                     % Audio commands
-            [y,Fs] = audioread("snakeHiss.wav");
-            sound(y,Fs)
+                        % Audio commands
+                        [y,Fs] = audioread("snakeHiss.wav");
+                        sound(y,Fs)
 
                     end
                     
@@ -632,10 +660,6 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             % Audio commands
             [y,Fs] = audioread("MANYDICE.wav");
             sound(y,Fs)
-
-            % Image visualization commands
-            set(app.Image3,'visible','on');
-            set(app.Image4,'visible','off');
             
         end
         
@@ -664,12 +688,11 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 endingWinner = "Tie";
             end
             
-            disp(endingWinner)
-            
+            % Open endgame screen and close gameplay
             endgamescreen_exported
             close(app.UIFigure)
             
-             % Audio commands
+            % Audio commands
             [y,Fs] = audioread("winnerSound.mp3");
             sound(y,Fs)
             
@@ -678,8 +701,8 @@ classdef gameplay_public_exported < matlab.apps.AppBase
          % Button pushed function: XButton
         function XButtonPushed(app, event)
             %Snake Eyes Image and close Button-Turn off
-                     set(app.Image5,'visible','off');
-                     set(app.XButton,'visible','off');
+            set(app.Image5,'visible','off');
+            set(app.XButton,'visible','off');
         end
         
     end
@@ -765,6 +788,26 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             app.ScoreEditField_2 = uieditfield(app.UIFigure, 'numeric');
             app.ScoreEditField_2.ValueChangedFcn = createCallbackFcn(app, @ScoreEditField_2ValueChanged, true);
             app.ScoreEditField_2.Position = [209 109 35 22];
+            
+            % Create Player1EditFieldLabel
+            app.Player1EditFieldLabel = uilabel(app.UIFigure);
+            app.Player1EditFieldLabel.HorizontalAlignment = 'right';
+            app.Player1EditFieldLabel.Position = [10 197 49 22];
+            app.Player1EditFieldLabel.Text = 'Player 1';
+
+            % Create Player1EditField
+            app.Player1EditField = uieditfield(app.UIFigure, 'text');
+            app.Player1EditField.Position = [74 197 100 22];
+
+            % Create Player2EditFieldLabel
+            app.Player2EditFieldLabel = uilabel(app.UIFigure);
+            app.Player2EditFieldLabel.HorizontalAlignment = 'right';
+            app.Player2EditFieldLabel.Position = [10 15 49 22];
+            app.Player2EditFieldLabel.Text = 'Player 2';
+
+            % Create Player2EditField
+            app.Player2EditField = uieditfield(app.UIFigure, 'text');
+            app.Player2EditField.Position = [74 15 100 22];
 
             % Create RollAgainButton_3
             app.RollAgainButton_3 = uibutton(app.UIFigure, 'push');
@@ -821,26 +864,6 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             app.XButton.FontColor = [1 1 1];
             app.XButton.Position = [284 250 30 22];
             app.XButton.Text = 'X';
-
-            % Create Player1EditFieldLabel
-            app.Player1EditFieldLabel = uilabel(app.UIFigure);
-            app.Player1EditFieldLabel.HorizontalAlignment = 'right';
-            app.Player1EditFieldLabel.Position = [10 197 49 22];
-            app.Player1EditFieldLabel.Text = 'Player 1';
-
-            % Create Player1EditField
-            app.Player1EditField = uieditfield(app.UIFigure, 'text');
-            app.Player1EditField.Position = [74 197 100 22];
-
-            % Create Player2EditFieldLabel
-            app.Player2EditFieldLabel = uilabel(app.UIFigure);
-            app.Player2EditFieldLabel.HorizontalAlignment = 'right';
-            app.Player2EditFieldLabel.Position = [10 15 49 22];
-            app.Player2EditFieldLabel.Text = 'Player 2';
-
-            % Create Player2EditField
-            app.Player2EditField = uieditfield(app.UIFigure, 'text');
-            app.Player2EditField.Position = [74 15 100 22];
 
             % Show the figure after all components are created
             app.UIFigure.Visible = 'on';

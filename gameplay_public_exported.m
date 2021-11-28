@@ -24,12 +24,17 @@ classdef gameplay_public_exported < matlab.apps.AppBase
         OneSnakeEyeRolledLabel  matlab.ui.control.Label
         XButton                matlab.ui.control.Button
         Image5                 matlab.ui.control.Image
+        Player1EditFieldLabel  matlab.ui.control.Label
+        Player1EditField       matlab.ui.control.EditField
+        Player2EditFieldLabel  matlab.ui.control.Label
+        Player2EditField       matlab.ui.control.EditField
         
         Player1 = gamePlayer("Player 1 Name", 1, 0, 1, true, false); % Creating Player1 object
         Player2 = gamePlayer("Player 2 Name", 2, 0, 1, false, false); % Creating Player2 object
         PlayerRolls = 0;       % Used to track the number of rolls per turn for each player
         Player1Scores = [];    % Array created for player 1 scores
         Player2Scores = [];    % Array created for player 2 scores
+        rulesScreen = rules_exported;
     end
 
 
@@ -139,6 +144,17 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             % Hide the snake eyes labels
             set(app.SnakeEyesRolledLabel, 'visible', 'off');
             set(app.OneSnakeEyeRolledLabel, 'visible', 'off');
+            
+            % Get player names
+            %rulesScreen = rules_exported;
+            %app.Player1.playerName = rulesScreen.Player1Name;
+            %app.Player2.playerName = rulesScreen.Player2Name;
+            %disp(app.rulesScreen.Player1Name)
+            %disp(app.rulesScreen.Player2Name)
+            
+            % Set player names
+            app.Player1EditField.Value = app.Player1.playerName;
+            app.Player2EditField.Value = app.Player2.playerName;
             
             app.myPlayerNum = 1;
             app.otherPlayerNum = 2;
@@ -604,6 +620,7 @@ classdef gameplay_public_exported < matlab.apps.AppBase
         % Button pushed function: EndGameButton
         function EndGameButtonPushed(app, event)
             endgamescreen_exported
+            close(app.UIFigure)
             
              % Audio commands
             [y,Fs] = audioread("winnerSound.mp3");
@@ -757,6 +774,25 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             app.XButton.Position = [284 250 30 22];
             app.XButton.Text = 'X';
 
+            % Create Player1EditFieldLabel
+            app.Player1EditFieldLabel = uilabel(app.UIFigure);
+            app.Player1EditFieldLabel.HorizontalAlignment = 'right';
+            app.Player1EditFieldLabel.Position = [10 197 49 22];
+            app.Player1EditFieldLabel.Text = 'Player 1';
+
+            % Create Player1EditField
+            app.Player1EditField = uieditfield(app.UIFigure, 'text');
+            app.Player1EditField.Position = [74 197 100 22];
+
+            % Create Player2EditFieldLabel
+            app.Player2EditFieldLabel = uilabel(app.UIFigure);
+            app.Player2EditFieldLabel.HorizontalAlignment = 'right';
+            app.Player2EditFieldLabel.Position = [10 15 49 22];
+            app.Player2EditFieldLabel.Text = 'Player 2';
+
+            % Create Player2EditField
+            app.Player2EditField = uieditfield(app.UIFigure, 'text');
+            app.Player2EditField.Position = [74 15 100 22];
 
             % Show the figure after all components are created
             app.UIFigure.Visible = 'on';

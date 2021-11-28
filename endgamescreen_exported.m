@@ -18,7 +18,9 @@ classdef endgamescreen_exported < matlab.apps.AppBase
         
         % Code that executes after component creation
         function startupFcn(app)
-            
+            global endingWinner
+            disp(endingWinner)
+            app.WinnerEditField.Value = endingWinner;
         end
 
         % Value changing function: WinnerEditField

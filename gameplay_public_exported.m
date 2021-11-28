@@ -34,7 +34,6 @@ classdef gameplay_public_exported < matlab.apps.AppBase
         PlayerRolls = 0;       % Used to track the number of rolls per turn for each player
         Player1Scores = [];    % Array created for player 1 scores
         Player2Scores = [];    % Array created for player 2 scores
-        rulesScreen = rules_exported;
     end
 
 
@@ -146,11 +145,10 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             set(app.OneSnakeEyeRolledLabel, 'visible', 'off');
             
             % Get player names
-            %rulesScreen = rules_exported;
-            %app.Player1.playerName = rulesScreen.Player1Name;
-            %app.Player2.playerName = rulesScreen.Player2Name;
-            %disp(app.rulesScreen.Player1Name)
-            %disp(app.rulesScreen.Player2Name)
+            global player1Name
+            global player2Name
+            app.Player1.playerName = player1Name;
+            app.Player2.playerName = player2Name;
             
             % Set player names
             app.Player1EditField.Value = app.Player1.playerName;
@@ -619,12 +617,38 @@ classdef gameplay_public_exported < matlab.apps.AppBase
         
         % Button pushed function: EndGameButton
         function EndGameButtonPushed(app, event)
+            
+            % Determine winner based on scores
+            if app.Player1.playerScore > app.Player2.playerScore
+                app.Player1.playerWin = true;
+                app.Player2.playerWin = false;
+            elseif app.Player2.playerScore > app.Player1.playerScore
+                app.Player1.playerWin = false;
+                app.Player2.playerWin = true;
+            elseif app.Player1.playerScore == app.Player2.playerScore
+                app.Player1.playerWin = false;
+                app.Player2.playerWin = false;
+            end
+            
+            % Determine winning player name
+            global endingWinner
+            if app.Player1.playerWin
+                endingWinner = app.Player1.playerName;
+            elseif app.Player2.playerWin
+                endingWinner = app.Player2.playerName;
+            elseif ~app.Player1.playerWin && ~ app.Player2.playerWin
+                endingWinner = "Tie";
+            end
+            
+            disp(endingWinner)
+            
             endgamescreen_exported
             close(app.UIFigure)
             
              % Audio commands
             [y,Fs] = audioread("winnerSound.mp3");
             sound(y,Fs)
+            
         end
 
          % Button pushed function: XButton

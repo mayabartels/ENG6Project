@@ -3,6 +3,9 @@ classdef endgamescreen_exported < matlab.apps.AppBase
     % Properties that correspond to app components
     properties (Access = public)
         UIFigure              matlab.ui.Figure
+        Image3                matlab.ui.control.Image
+        Image2                matlab.ui.control.Image
+        Image                 matlab.ui.control.Image
         WinnerEditField       matlab.ui.control.EditField
         WinnerEditFieldLabel  matlab.ui.control.Label
         Label                 matlab.ui.control.Label
@@ -52,6 +55,22 @@ classdef endgamescreen_exported < matlab.apps.AppBase
             app.WinnerEditField = uieditfield(app.UIFigure, 'text');
             app.WinnerEditField.ValueChangingFcn = createCallbackFcn(app, @WinnerEditFieldValueChanging, true);
             app.WinnerEditField.Position = [299 230 100 22];
+
+              % Create Image
+            app.Image = uiimage(app.UIFigure);
+            app.Image.Position = [16 113 210 204];
+            app.Image.ImageSource = 'winnerSnakeGif.gif';
+
+            % Create Image2
+            app.Image2 = uiimage(app.UIFigure);
+            app.Image2.Position = [225 340 185 163];
+            app.Image2.ImageSource = 'snakeGif.gif';
+
+            % Create Image3
+            app.Image3 = uiimage(app.UIFigure);
+            app.Image3.Position = [377 47 215 192];
+            app.Image3.ImageSource = 'Congratulations.gif';
+
 
             % Show the figure after all components are created
             app.UIFigure.Visible = 'on';

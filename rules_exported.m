@@ -22,9 +22,6 @@ classdef rules_exported < matlab.apps.AppBase
             % Open gameplay screen and close Rules
             gameplay_public_exported
             close(app.UIFigure)
-            
-            % Make accessible by gameplay script
-            %app.rules_exported = rulesScreen;
 
             % Audio commands
             [y,Fs] = audioread("snakeHiss.wav");

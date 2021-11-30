@@ -150,14 +150,14 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             set(app.Image4,'visible','on');
             
             % Get player names
-            global player1Name
-            global player2Name
-            app.Player1.playerName = player1Name;
-            app.Player2.playerName = player2Name;
+            %global player1Name
+            %global player2Name
+            %app.Player1.playerName = player1Name;
+            %app.Player2.playerName = player2Name;
             
             % Set player names
-            app.Player1EditField.Value = app.Player1.playerName;
-            app.Player2EditField.Value = app.Player2.playerName;
+            %app.Player1EditField.Value = app.Player1.playerName;
+            %app.Player2EditField.Value = app.Player2.playerName;
             
             app.myPlayerNum = 1;
             app.otherPlayerNum = 2;
@@ -678,6 +678,9 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 app.Player2.playerWin = false;
             end
             
+            disp(app.Player1.playerName)
+            disp(app.Player2.playerName)
+            
             % Determine winning player name
             global endingWinner
             if app.Player1.playerWin
@@ -696,6 +699,18 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             [y,Fs] = audioread("winnerSound.mp3");
             sound(y,Fs)
             
+        end
+        
+        % Value changed function: Player1EditField
+        function Player1EditFieldValueChanged(app, event)
+            app.Player1.playerName = app.Player1EditField.Value;
+            disp(app.Player1.playerName)
+        end
+
+        % Value changed function: Player2EditField
+        function Player2EditFieldValueChanged(app, event)
+            app.Player2.playerName = app.Player2EditField.Value;
+            disp(app.Player2.playerName)
         end
 
          % Button pushed function: XButton
@@ -797,6 +812,7 @@ classdef gameplay_public_exported < matlab.apps.AppBase
 
             % Create Player1EditField
             app.Player1EditField = uieditfield(app.UIFigure, 'text');
+            app.Player1EditField.ValueChangedFcn = createCallbackFcn(app, @Player1EditFieldValueChanged, true);
             app.Player1EditField.Position = [74 197 100 22];
 
             % Create Player2EditFieldLabel
@@ -807,6 +823,7 @@ classdef gameplay_public_exported < matlab.apps.AppBase
 
             % Create Player2EditField
             app.Player2EditField = uieditfield(app.UIFigure, 'text');
+            app.Player2EditField.ValueChangedFcn = createCallbackFcn(app, @Player2EditFieldValueChanged, true);
             app.Player2EditField.Position = [74 15 100 22];
 
             % Create RollAgainButton_3

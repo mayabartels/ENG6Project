@@ -156,8 +156,8 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             %app.Player2.playerName = player2Name;
             
             % Set player names
-            %app.Player1EditField.Value = app.Player1.playerName;
-            %app.Player2EditField.Value = app.Player2.playerName;
+            app.Player1EditField.Value = app.Player1.playerName;
+            app.Player2EditField.Value = app.Player2.playerName;
             
             app.myPlayerNum = 1;
             app.otherPlayerNum = 2;
@@ -169,7 +169,7 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             app.readDelay = 5;
             app.writeDelay = 1;
             app.ClearThinkSpeakChannel();
-            set(app.RollButton, 'Enable', 'off');
+            %set(app.RollButton, 'Enable', 'off');
 
             %%% Must fix following
              % if app.snakeyes.player1 = valuechanged

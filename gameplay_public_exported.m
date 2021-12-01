@@ -28,8 +28,7 @@ classdef gameplay_public_exported < matlab.apps.AppBase
         Player1EditField       matlab.ui.control.EditField
         Player2EditFieldLabel  matlab.ui.control.Label
         Player2EditField       matlab.ui.control.EditField
-        roundNum 
-        
+        roundNum               % Keep track of round number
         
         Player1 = gamePlayer("Player 1 Name", 1, 0, 1, true, false); % Creating Player1 object
         Player2 = gamePlayer("Player 2 Name", 2, 0, 1, false, false); % Creating Player2 object
@@ -172,12 +171,9 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             app.readDelay = 5;
             app.writeDelay = 1;
             app.ClearThinkSpeakChannel();
-
-         
             
-        
-
             %set(app.RollButton, 'Enable', 'off');
+            
             %%% Must fix following
              % if app.snakeyes.player1 = valuechanged
              %    app.myPlayerNum = 1;
@@ -372,8 +368,7 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                     % Switch the player turn
                     app.Player1.playerTurn = true;
                     app.Player2.playerTurn = false;
-                    app.roundNum= app.roundNum +1
-                  
+                    app.roundNum= app.roundNum +1;
                     
                     % Set the player rolls per round to zero again
                     app.PlayerRolls = 0;
@@ -412,50 +407,44 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 else
                 end
                 
-             
-                
             end
             
             % Audio commands
             [y,Fs]=audioread("MANYDICE.wav");
             sound(y,Fs)
             
-         if app.roundNum ==5
-                         % Determine winner based on scores
-                        if app.Player1.playerScore > app.Player2.playerScore
-                            app.Player1.playerWin = true;
-                            app.Player2.playerWin = false;
-                        elseif app.Player2.playerScore > app.Player1.playerScore
-                            app.Player1.playerWin = false;
-                            app.Player2.playerWin = true;
-                        elseif app.Player1.playerScore == app.Player2.playerScore
-                            app.Player1.playerWin = false;
-                            app.Player2.playerWin = false;
-                        end
+            if app.roundNum ==5
+                % Determine winner based on scores
+                if app.Player1.playerScore > app.Player2.playerScore
+                	app.Player1.playerWin = true;
+                    app.Player2.playerWin = false;
+                elseif app.Player2.playerScore > app.Player1.playerScore
+                    app.Player1.playerWin = false;
+                    app.Player2.playerWin = true;
+                elseif app.Player1.playerScore == app.Player2.playerScore
+                    app.Player1.playerWin = false;
+                    app.Player2.playerWin = false;
+                end
 
-                        disp(app.Player1.playerName)
-                        disp(app.Player2.playerName)
+                % Determine winning player name
+                global endingWinner
+                if app.Player1.playerWin
+                	endingWinner = app.Player1.playerName;
+                elseif app.Player2.playerWin
+                    endingWinner = app.Player2.playerName;
+                elseif ~app.Player1.playerWin && ~ app.Player2.playerWin
+                    endingWinner = "Tie";
+                end
 
-                        % Determine winning player name
-                        global endingWinner
-                        if app.Player1.playerWin
-                            endingWinner = app.Player1.playerName;
-                        elseif app.Player2.playerWin
-                            endingWinner = app.Player2.playerName;
-                        elseif ~app.Player1.playerWin && ~ app.Player2.playerWin
-                            endingWinner = "Tie";
-                        end
+                % Open endgame screen and close gameplay
+                endgamescreen_exported
+                close(app.UIFigure)
 
-                        % Open endgame screen and close gameplay
-                        endgamescreen_exported
-                        close(app.UIFigure)
-
-                        % Audio commands
-                        [y,Fs] = audioread("winnerSound.mp3");
-                        sound(y,Fs)
-                    end
-        
-        
+                % Audio commands
+                [y,Fs] = audioread("winnerSound.mp3");
+                sound(y,Fs)
+            end
+            
         end
         
         % Value changed function: ScoreEditField_2
@@ -497,9 +486,7 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 % Switch the player turn when pushed
                 app.Player1.playerTurn = ~app.Player1.playerTurn;
                 app.Player2.playerTurn = ~app.Player2.playerTurn;
-                app.roundNum= app.roundNum +1
-                 
-                    
+                app.roundNum= app.roundNum +1;
                 
                 % Switch dice placement for image
                 % Image visualization commands
@@ -516,40 +503,37 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             [y,Fs] = audioread("endGame.wav");
             sound(y,Fs)
             
-             if app.roundNum ==5
-                         % Determine winner based on scores
-                        if app.Player1.playerScore > app.Player2.playerScore
-                            app.Player1.playerWin = true;
-                            app.Player2.playerWin = false;
-                        elseif app.Player2.playerScore > app.Player1.playerScore
-                            app.Player1.playerWin = false;
-                            app.Player2.playerWin = true;
-                        elseif app.Player1.playerScore == app.Player2.playerScore
-                            app.Player1.playerWin = false;
-                            app.Player2.playerWin = false;
-                        end
+            if app.roundNum ==5
+            	% Determine winner based on scores
+                if app.Player1.playerScore > app.Player2.playerScore
+                	app.Player1.playerWin = true;
+                    app.Player2.playerWin = false;
+                elseif app.Player2.playerScore > app.Player1.playerScore
+                    app.Player1.playerWin = false;
+                    app.Player2.playerWin = true;
+                elseif app.Player1.playerScore == app.Player2.playerScore
+                    app.Player1.playerWin = false;
+                    app.Player2.playerWin = false;
+                end
 
-                        disp(app.Player1.playerName)
-                        disp(app.Player2.playerName)
+                % Determine winning player name
+                global endingWinner
+                if app.Player1.playerWin
+                	endingWinner = app.Player1.playerName;
+                elseif app.Player2.playerWin
+                	endingWinner = app.Player2.playerName;
+                elseif ~app.Player1.playerWin && ~ app.Player2.playerWin
+                    endingWinner = "Tie";
+                end
 
-                        % Determine winning player name
-                        global endingWinner
-                        if app.Player1.playerWin
-                            endingWinner = app.Player1.playerName;
-                        elseif app.Player2.playerWin
-                            endingWinner = app.Player2.playerName;
-                        elseif ~app.Player1.playerWin && ~ app.Player2.playerWin
-                            endingWinner = "Tie";
-                        end
+                % Open endgame screen and close gameplay
+                endgamescreen_exported
+                close(app.UIFigure)
 
-                        % Open endgame screen and close gameplay
-                        endgamescreen_exported
-                        close(app.UIFigure)
-
-                        % Audio commands
-                        [y,Fs] = audioread("winnerSound.mp3");
-                        sound(y,Fs)
-                    end
+                % Audio commands
+                [y,Fs] = audioread("winnerSound.mp3");
+                sound(y,Fs)
+            end
             
         end
         
@@ -702,9 +686,7 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                     % Switch the player turn
                     app.Player1.playerTurn = true;
                     app.Player2.playerTurn = false;
-                    app.roundNum= app.roundNum+1
-                    
-                  
+                    app.roundNum= app.roundNum+1;
                     
                     % Set the player rolls per round to zero again
                     app.PlayerRolls = 0;
@@ -741,7 +723,6 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                         
 
                     end
-                   
                     
                 else
                 end
@@ -752,40 +733,37 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             [y,Fs] = audioread("MANYDICE.wav");
             sound(y,Fs)
             
-              if app.roundNum ==5
-                         % Determine winner based on scores
-                        if app.Player1.playerScore > app.Player2.playerScore
-                            app.Player1.playerWin = true;
-                            app.Player2.playerWin = false;
-                        elseif app.Player2.playerScore > app.Player1.playerScore
-                            app.Player1.playerWin = false;
-                            app.Player2.playerWin = true;
-                        elseif app.Player1.playerScore == app.Player2.playerScore
-                            app.Player1.playerWin = false;
-                            app.Player2.playerWin = false;
-                        end
+            if app.roundNum ==5
+            	% Determine winner based on scores
+            	if app.Player1.playerScore > app.Player2.playerScore
+                	app.Player1.playerWin = true;
+                	app.Player2.playerWin = false;
+                elseif app.Player2.playerScore > app.Player1.playerScore
+                    app.Player1.playerWin = false;
+                    app.Player2.playerWin = true;
+                elseif app.Player1.playerScore == app.Player2.playerScore
+                    app.Player1.playerWin = false;
+                    app.Player2.playerWin = false;
+                end
 
-                        disp(app.Player1.playerName)
-                        disp(app.Player2.playerName)
+                % Determine winning player name
+                global endingWinner
+                if app.Player1.playerWin
+                	endingWinner = app.Player1.playerName;
+                elseif app.Player2.playerWin
+                	endingWinner = app.Player2.playerName;
+                elseif ~app.Player1.playerWin && ~ app.Player2.playerWin
+                	endingWinner = "Tie";
+                end
 
-                        % Determine winning player name
-                        global endingWinner
-                        if app.Player1.playerWin
-                            endingWinner = app.Player1.playerName;
-                        elseif app.Player2.playerWin
-                            endingWinner = app.Player2.playerName;
-                        elseif ~app.Player1.playerWin && ~ app.Player2.playerWin
-                            endingWinner = "Tie";
-                        end
+                % Open endgame screen and close gameplay
+                endgamescreen_exported
+                close(app.UIFigure)
 
-                        % Open endgame screen and close gameplay
-                        endgamescreen_exported
-                        close(app.UIFigure)
-
-                        % Audio commands
-                        [y,Fs] = audioread("winnerSound.mp3");
-                        sound(y,Fs)
-                    end
+                % Audio commands
+                [y,Fs] = audioread("winnerSound.mp3");
+                sound(y,Fs)
+        	end
             
         end
         

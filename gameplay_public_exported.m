@@ -29,6 +29,18 @@ classdef gameplay_public_exported < matlab.apps.AppBase
         Image5                  matlab.ui.control.Image
         XButton                 matlab.ui.control.Button
         SnakeEyesLabel          matlab.ui.control.Label
+        dice1face1              matlab.ui.control.Image
+        dice2face1              matlab.ui.control.Image
+        dice1face2              matlab.ui.control.Image
+        dice2face2              matlab.ui.control.Image
+        dice1face3              matlab.ui.control.Image
+        dice2face3              matlab.ui.control.Image
+        dice2face4              matlab.ui.control.Image
+        dice1face4              matlab.ui.control.Image
+        dice1face5              matlab.ui.control.Image
+        dice2face5              matlab.ui.control.Image
+        dice1face6              matlab.ui.control.Image
+        dice2face6              matlab.ui.control.Image
         roundNum               % Keep track of round number
     end
 
@@ -921,6 +933,78 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             app.SnakeEyesLabel.FontWeight = 'bold';
             app.SnakeEyesLabel.Position = [25 407 228 45];
             app.SnakeEyesLabel.Text = 'Snake Eyes!';
+            
+            % Create dice1face1
+            app.dice1face1 = uiimage(app.UIFigure);
+            app.dice1face1.Visible = 'off';
+            app.dice1face1.Position = [128 200 100 100];
+            app.dice1face1.ImageSource = 'dice1.png';
+
+            % Create dice2face1
+            app.dice2face1 = uiimage(app.UIFigure);
+            app.dice2face1.Visible = 'off';
+            app.dice2face1.Position = [250 200 100 100];
+            app.dice2face1.ImageSource = 'dice1.png';
+
+            % Create dice1face2
+            app.dice1face2 = uiimage(app.UIFigure);
+            app.dice1face2.Visible = 'off';
+            app.dice1face2.Position = [128 200 100 100];
+            app.dice1face2.ImageSource = 'dice2.png';
+
+            % Create dice2face2
+            app.dice2face2 = uiimage(app.UIFigure);
+            app.dice2face2.Visible = 'off';
+            app.dice2face2.Position = [250 200 100 100];
+            app.dice2face2.ImageSource = 'dice2.png';
+
+            % Create dice1face3
+            app.dice1face3 = uiimage(app.UIFigure);
+            app.dice1face3.Visible = 'off';
+            app.dice1face3.Position = [128 200 100 100];
+            app.dice1face3.ImageSource = 'dice3.png';
+
+            % Create dice2face3
+            app.dice2face3 = uiimage(app.UIFigure);
+            app.dice2face3.Visible = 'off';
+            app.dice2face3.Position = [250 200 100 100];
+            app.dice2face3.ImageSource = 'dice3.png';
+
+            % Create dice2face4
+            app.dice2face4 = uiimage(app.UIFigure);
+            app.dice2face4.Visible = 'off';
+            app.dice2face4.Position = [250 200 100 100];
+            app.dice2face4.ImageSource = 'dice4.png';
+
+            % Create dice1face4
+            app.dice1face4 = uiimage(app.UIFigure);
+            app.dice1face4.Visible = 'off';
+            app.dice1face4.Position = [128 200 100 100];
+            app.dice1face4.ImageSource = 'dice4.png';
+
+            % Create dice1face5
+            app.dice1face5 = uiimage(app.UIFigure);
+            app.dice1face5.Visible = 'off';
+            app.dice1face5.Position = [128 200 100 100];
+            app.dice1face5.ImageSource = 'dice5.png';
+
+            % Create dice2face5
+            app.dice2face5 = uiimage(app.UIFigure);
+            app.dice2face5.Visible = 'off';
+            app.dice2face5.Position = [252 200 100 100];
+            app.dice2face5.ImageSource = 'dice5.png';
+
+            % Create dice1face6
+            app.dice1face6 = uiimage(app.UIFigure);
+            app.dice1face6.Visible = 'off';
+            app.dice1face6.Position = [128 200 100 100];
+            app.dice1face6.ImageSource = 'dice6.png';
+
+            % Create dice2face6
+            app.dice2face6 = uiimage(app.UIFigure);
+            app.dice2face6.Visible = 'off';
+            app.dice2face6.Position = [252 200 100 100];
+            app.dice2face6.ImageSource = 'dice6.png';
 
             % Show the figure after all components are created
             app.UIFigure.Visible = 'on';

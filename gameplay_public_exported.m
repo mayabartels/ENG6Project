@@ -88,12 +88,6 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             set(app.Image3,'visible','off');
             set(app.Image4,'visible','on');
             
-            % Get player names
-            %global player1Name
-            %global player2Name
-            %app.Player1.playerName = app.player1Name;
-            %app.Player2.playerName = app.player2Name;
-            
             % Set player names
             app.Player1EditField.Value = app.Player1.playerName;
             app.Player2EditField.Value = app.Player2.playerName;
@@ -113,7 +107,7 @@ classdef gameplay_public_exported < matlab.apps.AppBase
         % Close request function: UIFigure
         function MainAppCloseRequest(app, event)
             % Delete both apps
-            delete(app.DialogApp)
+            %delete(app.DialogApp)
             delete(app)
         end
 
@@ -305,46 +299,49 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                         sound(y,Fs)
 
                     end
+                    
+                    % End game if round 5 and snake eye or eyes rolled
+                    if app.roundNum ==5
+                        % Determine winner based on scores
+                        if app.Player1.playerScore > app.Player2.playerScore
+                            app.Player1.playerWin = true;
+                            app.Player2.playerWin = false;
+                        elseif app.Player2.playerScore > app.Player1.playerScore
+                            app.Player1.playerWin = false;
+                            app.Player2.playerWin = true;
+                        elseif app.Player1.playerScore == app.Player2.playerScore
+                            app.Player1.playerWin = false;
+                            app.Player2.playerWin = false;
+                        end
+
+                        % Determine winning player name
+                        global endingWinner
+                        if app.Player1.playerWin
+                            endingWinner = app.Player1.playerName;
+                        elseif app.Player2.playerWin
+                            endingWinner = app.Player2.playerName;
+                        elseif ~app.Player1.playerWin && ~ app.Player2.playerWin
+                            endingWinner = "Tie";
+                        end
+
+                        % Open endgame screen and close gameplay
+                        endgamescreen_exported
+                        close(app.UIFigure)
+
+                        % Audio commands
+                        [y,Fs] = audioread("winnerSound.mp3");
+                        sound(y,Fs)
+                    end
 
                 else
+                    
+                    % Player dice roll sound if snake eye or eyes not
+                    % rolled
+                    [y,Fs]=audioread("MANYDICE.wav");
+                    sound(y,Fs)
+                    
                 end
                 
-            end
-            
-            % Audio commands
-            [y,Fs]=audioread("MANYDICE.wav");
-            sound(y,Fs)
-            
-            if app.roundNum ==5
-                % Determine winner based on scores
-                if app.Player1.playerScore > app.Player2.playerScore
-                	app.Player1.playerWin = true;
-                    app.Player2.playerWin = false;
-                elseif app.Player2.playerScore > app.Player1.playerScore
-                    app.Player1.playerWin = false;
-                    app.Player2.playerWin = true;
-                elseif app.Player1.playerScore == app.Player2.playerScore
-                    app.Player1.playerWin = false;
-                    app.Player2.playerWin = false;
-                end
-
-                % Determine winning player name
-                global endingWinner
-                if app.Player1.playerWin
-                	endingWinner = app.Player1.playerName;
-                elseif app.Player2.playerWin
-                    endingWinner = app.Player2.playerName;
-                elseif ~app.Player1.playerWin && ~ app.Player2.playerWin
-                    endingWinner = "Tie";
-                end
-
-                % Open endgame screen and close gameplay
-                endgamescreen_exported
-                close(app.UIFigure)
-
-                % Audio commands
-                [y,Fs] = audioread("winnerSound.mp3");
-                sound(y,Fs)
             end
             
         end
@@ -405,7 +402,6 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             [y,Fs] = audioread("endGame.wav");
             sound(y,Fs)
             
-            
             if app.roundNum ==5
             	% Determine winner based on scores
                 if app.Player1.playerScore > app.Player2.playerScore
@@ -434,8 +430,8 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 close(app.UIFigure)
 
                 % Audio commands
-                [y,Fs] = audioread("winnerSound.mp3");
-                sound(y,Fs)
+                %[y,Fs] = audioread("winnerSound.mp3");
+                %sound(y,Fs)
             end
             
         end
@@ -626,46 +622,49 @@ classdef gameplay_public_exported < matlab.apps.AppBase
 
                     end
                     
+                    % Display snake eyes or snake eye if either was rolled
+                    if app.roundNum ==5
+                        % Determine winner based on scores
+                        if app.Player1.playerScore > app.Player2.playerScore
+                            app.Player1.playerWin = true;
+                            app.Player2.playerWin = false;
+                        elseif app.Player2.playerScore > app.Player1.playerScore
+                            app.Player1.playerWin = false;
+                            app.Player2.playerWin = true;
+                        elseif app.Player1.playerScore == app.Player2.playerScore
+                            app.Player1.playerWin = false;
+                            app.Player2.playerWin = false;
+                        end
+
+                        % Determine winning player name
+                        global endingWinner
+                        if app.Player1.playerWin
+                            endingWinner = app.Player1.playerName;
+                        elseif app.Player2.playerWin
+                            endingWinner = app.Player2.playerName;
+                        elseif ~app.Player1.playerWin && ~ app.Player2.playerWin
+                            endingWinner = "Tie";
+                        end
+
+                        % Open endgame screen and close gameplay
+                        endgamescreen_exported
+                        close(app.UIFigure)
+
+                        % Audio commands
+                        [y,Fs] = audioread("winnerSound.mp3");
+                        sound(y,Fs)
+                    end
+                    
                 else
+                    
+                    % Player dice roll sound if snake eye or eyes not
+                    % rolled
+                    [y,Fs] = audioread("MANYDICE.wav");
+                    sound(y,Fs)
+                    
                 end
                 
             end
-            
-            % Audio commands
-            [y,Fs] = audioread("MANYDICE.wav");
-            sound(y,Fs)
-            
-            if app.roundNum ==5
-            	% Determine winner based on scores
-            	if app.Player1.playerScore > app.Player2.playerScore
-                	app.Player1.playerWin = true;
-                	app.Player2.playerWin = false;
-                elseif app.Player2.playerScore > app.Player1.playerScore
-                    app.Player1.playerWin = false;
-                    app.Player2.playerWin = true;
-                elseif app.Player1.playerScore == app.Player2.playerScore
-                    app.Player1.playerWin = false;
-                    app.Player2.playerWin = false;
-                end
-
-                % Determine winning player name
-                global endingWinner
-                if app.Player1.playerWin
-                	endingWinner = app.Player1.playerName;
-                elseif app.Player2.playerWin
-                	endingWinner = app.Player2.playerName;
-                elseif ~app.Player1.playerWin && ~ app.Player2.playerWin
-                	endingWinner = "Tie";
-                end
-
-                % Open endgame screen and close gameplay
-                endgamescreen_exported
-                close(app.UIFigure)
-
-                % Audio commands
-                [y,Fs] = audioread("winnerSound.mp3");
-                sound(y,Fs)
-        	end
             
         end
 

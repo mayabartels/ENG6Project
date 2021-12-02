@@ -3,31 +3,32 @@ classdef gameplay_public_exported < matlab.apps.AppBase
     % Properties that correspond to app components
     properties (Access = public)
         UIFigure                matlab.ui.Figure
-        XButton                 matlab.ui.control.Button
-        Image5                  matlab.ui.control.Image
-        EndGameButton           matlab.ui.control.Button
-        SnakeEyesRolledLabel    matlab.ui.control.Label
-        OneSnakeEyeRolledLabel  matlab.ui.control.Label
-        Player2EditField        matlab.ui.control.EditField
-        Player2EditFieldLabel   matlab.ui.control.Label
-        Player1EditField        matlab.ui.control.EditField
-        Player1EditFieldLabel   matlab.ui.control.Label
-        RollAgainButton_2       matlab.ui.control.Button
-        Image4                  matlab.ui.control.Image
-        Image3                  matlab.ui.control.Image
-        RollAgainButton_3       matlab.ui.control.Button
-        ScoreEditField_2        matlab.ui.control.NumericEditField
-        ScoreEditField_2Label   matlab.ui.control.Label
-        ScoreEditField          matlab.ui.control.NumericEditField
-        ScoreEditFieldLabel     matlab.ui.control.Label
-        Image2                  matlab.ui.control.Image
-        Image                   matlab.ui.control.Image
-        EndTurnButton_3         matlab.ui.control.Button
-        EndTurnButton_2         matlab.ui.control.Button
-        RollButton              matlab.ui.control.Button
-        RollButton_2            matlab.ui.control.Button
-        UITable2                matlab.ui.control.Table
         UITable                 matlab.ui.control.Table
+        UITable2                matlab.ui.control.Table
+        RollButton_2            matlab.ui.control.Button
+        RollButton              matlab.ui.control.Button
+        EndTurnButton_2         matlab.ui.control.Button
+        EndTurnButton_3         matlab.ui.control.Button
+        Image                   matlab.ui.control.Image
+        Image2                  matlab.ui.control.Image
+        ScoreEditFieldLabel     matlab.ui.control.Label
+        ScoreEditField          matlab.ui.control.NumericEditField
+        ScoreEditField_2Label   matlab.ui.control.Label
+        ScoreEditField_2        matlab.ui.control.NumericEditField
+        RollAgainButton_3       matlab.ui.control.Button
+        Image3                  matlab.ui.control.Image
+        Image4                  matlab.ui.control.Image
+        RollAgainButton_2       matlab.ui.control.Button
+        Player1EditFieldLabel   matlab.ui.control.Label
+        Player1EditField        matlab.ui.control.EditField
+        Player2EditFieldLabel   matlab.ui.control.Label
+        Player2EditField        matlab.ui.control.EditField
+        OneSnakeEyeRolledLabel  matlab.ui.control.Label
+        SnakeEyesRolledLabel    matlab.ui.control.Label
+        EndGameButton           matlab.ui.control.Button
+        Image5                  matlab.ui.control.Image
+        XButton                 matlab.ui.control.Button
+        SnakeEyesLabel          matlab.ui.control.Label
         roundNum               % Keep track of round number
     end
 
@@ -733,7 +734,7 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             % Create UIFigure and hide until all components are created
             app.UIFigure = uifigure('Visible', 'off');
             app.UIFigure.Color = [0.4667 0.6745 0.1882];
-            app.UIFigure.Position = [100 100 539 377];
+            app.UIFigure.Position = [100 100 678 465];
             app.UIFigure.Name = 'Display Plot';
             app.UIFigure.CloseRequestFcn = createCallbackFcn(app, @MainAppCloseRequest, true);
 
@@ -741,121 +742,123 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             app.UITable = uitable(app.UIFigure);
             app.UITable.ColumnName = {'Round'; 'Score'};
             app.UITable.RowName = {};
-            app.UITable.Position = [372 202 161 167];
+            app.UITable.Position = [486 272 161 167];
 
             % Create UITable2
             app.UITable2 = uitable(app.UIFigure);
             app.UITable2.ColumnName = {'Round'; 'Score'};
             app.UITable2.RowName = {};
-            app.UITable2.Position = [373 15 161 177];
+            app.UITable2.Position = [493 51 161 177];
 
             % Create RollButton_2
             app.RollButton_2 = uibutton(app.UIFigure, 'push');
             app.RollButton_2.ButtonPushedFcn = createCallbackFcn(app, @RollButton_2Pushed, true);
-            app.RollButton_2.Position = [269 307 100 22];
+            app.RollButton_2.Position = [373 386 100 22];
             app.RollButton_2.Text = 'Roll';
 
             % Create RollButton
             app.RollButton = uibutton(app.UIFigure, 'push');
             app.RollButton.ButtonPushedFcn = createCallbackFcn(app, @RollButtonPushed, true);
-            app.RollButton.Position = [269 163 100 22];
+            app.RollButton.Position = [373 169 100 22];
             app.RollButton.Text = 'Roll';
 
             % Create EndTurnButton_2
             app.EndTurnButton_2 = uibutton(app.UIFigure, 'push');
             app.EndTurnButton_2.ButtonPushedFcn = createCallbackFcn(app, @EndTurnButton_2Pushed, true);
-            app.EndTurnButton_2.Position = [270 101 100 22];
+            app.EndTurnButton_2.BackgroundColor = [0.8784 0.6588 0.6588];
+            app.EndTurnButton_2.Position = [373 92 100 22];
             app.EndTurnButton_2.Text = 'End Turn';
 
             % Create EndTurnButton_3
             app.EndTurnButton_3 = uibutton(app.UIFigure, 'push');
             app.EndTurnButton_3.ButtonPushedFcn = createCallbackFcn(app, @EndTurnButton_3Pushed, true);
-            app.EndTurnButton_3.Position = [272 242 100 22];
+            app.EndTurnButton_3.BackgroundColor = [0.8784 0.6588 0.6588];
+            app.EndTurnButton_3.Position = [373 306 100 22];
             app.EndTurnButton_3.Text = 'End Turn';
 
             % Create Image
             app.Image = uiimage(app.UIFigure);
-            app.Image.Position = [25 250 76 70];
+            app.Image.Position = [19 293 76 70];
             app.Image.ImageSource = 'SnakeIcon2.jpg';
 
             % Create Image2
             app.Image2 = uiimage(app.UIFigure);
-            app.Image2.Position = [26 44 75 87];
+            app.Image2.Position = [12 104 75 87];
             app.Image2.ImageSource = 'SnakeIcon.jpg';
 
             % Create ScoreEditFieldLabel
             app.ScoreEditFieldLabel = uilabel(app.UIFigure);
             app.ScoreEditFieldLabel.HorizontalAlignment = 'right';
-            app.ScoreEditFieldLabel.Position = [153 286 40 22];
+            app.ScoreEditFieldLabel.Position = [557 239 40 22];
             app.ScoreEditFieldLabel.Text = 'Score:';
 
             % Create ScoreEditField
             app.ScoreEditField = uieditfield(app.UIFigure, 'numeric');
             app.ScoreEditField.ValueChangedFcn = createCallbackFcn(app, @ScoreEditFieldValueChanged, true);
-            app.ScoreEditField.Position = [208 286 35 22];
+            app.ScoreEditField.Position = [612 239 35 22];
 
             % Create ScoreEditField_2Label
             app.ScoreEditField_2Label = uilabel(app.UIFigure);
             app.ScoreEditField_2Label.HorizontalAlignment = 'right';
-            app.ScoreEditField_2Label.Position = [154 109 40 22];
+            app.ScoreEditField_2Label.Position = [557 18 40 22];
             app.ScoreEditField_2Label.Text = 'Score:';
 
             % Create ScoreEditField_2
             app.ScoreEditField_2 = uieditfield(app.UIFigure, 'numeric');
             app.ScoreEditField_2.ValueChangedFcn = createCallbackFcn(app, @ScoreEditField_2ValueChanged, true);
-            app.ScoreEditField_2.Position = [209 109 35 22];
+            app.ScoreEditField_2.Position = [612 18 35 22];
 
             % Create RollAgainButton_3
             app.RollAgainButton_3 = uibutton(app.UIFigure, 'push');
             app.RollAgainButton_3.ButtonPushedFcn = createCallbackFcn(app, @RollAgainButton_3Pushed, true);
-            app.RollAgainButton_3.Position = [271 274 100 22];
+            app.RollAgainButton_3.Position = [373 344 100 22];
             app.RollAgainButton_3.Text = 'Roll Again';
 
             % Create Image3
             app.Image3 = uiimage(app.UIFigure);
             app.Image3.Visible = 'off';
-            app.Image3.Position = [96 77 53 47];
+            app.Image3.Position = [94 109 53 47];
             app.Image3.ImageSource = 'dice_gif.gif';
 
             % Create Image4
             app.Image4 = uiimage(app.UIFigure);
-            app.Image4.Position = [97 274 52 43];
+            app.Image4.Position = [97 323 52 43];
             app.Image4.ImageSource = 'dice_gif.gif';
 
             % Create RollAgainButton_2
             app.RollAgainButton_2 = uibutton(app.UIFigure, 'push');
             app.RollAgainButton_2.ButtonPushedFcn = createCallbackFcn(app, @RollAgainButton_2Pushed, true);
-            app.RollAgainButton_2.Position = [270 130 100 22];
+            app.RollAgainButton_2.Position = [373 128 100 22];
             app.RollAgainButton_2.Text = 'Roll Again';
 
             % Create Player1EditFieldLabel
             app.Player1EditFieldLabel = uilabel(app.UIFigure);
             app.Player1EditFieldLabel.HorizontalAlignment = 'right';
-            app.Player1EditFieldLabel.Position = [10 197 49 22];
+            app.Player1EditFieldLabel.Position = [30 372 49 22];
             app.Player1EditFieldLabel.Text = 'Player 1';
 
             % Create Player1EditField
             app.Player1EditField = uieditfield(app.UIFigure, 'text');
             app.Player1EditField.ValueChangedFcn = createCallbackFcn(app, @Player1EditFieldValueChanged, true);
-            app.Player1EditField.Position = [74 197 100 22];
+            app.Player1EditField.Position = [94 372 100 22];
 
             % Create Player2EditFieldLabel
             app.Player2EditFieldLabel = uilabel(app.UIFigure);
             app.Player2EditFieldLabel.HorizontalAlignment = 'right';
-            app.Player2EditFieldLabel.Position = [10 15 49 22];
+            app.Player2EditFieldLabel.Position = [25 71 49 22];
             app.Player2EditFieldLabel.Text = 'Player 2';
 
             % Create Player2EditField
             app.Player2EditField = uieditfield(app.UIFigure, 'text');
             app.Player2EditField.ValueChangedFcn = createCallbackFcn(app, @Player2EditFieldValueChanged, true);
-            app.Player2EditField.Position = [74 15 100 22];
+            app.Player2EditField.Position = [89 71 100 22];
 
             % Create OneSnakeEyeRolledLabel
             app.OneSnakeEyeRolledLabel = uilabel(app.UIFigure);
             app.OneSnakeEyeRolledLabel.HorizontalAlignment = 'center';
             app.OneSnakeEyeRolledLabel.FontColor = [1 0 0];
             app.OneSnakeEyeRolledLabel.Visible = 'off';
-            app.OneSnakeEyeRolledLabel.Position = [74 339 130 22];
+            app.OneSnakeEyeRolledLabel.Position = [161 155 130 22];
             app.OneSnakeEyeRolledLabel.Text = {'One Snake Eye Rolled!'; ''};
 
             % Create SnakeEyesRolledLabel
@@ -863,20 +866,20 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             app.SnakeEyesRolledLabel.HorizontalAlignment = 'center';
             app.SnakeEyesRolledLabel.FontColor = [1 0 0];
             app.SnakeEyesRolledLabel.Visible = 'off';
-            app.SnakeEyesRolledLabel.Position = [84 339 110 22];
+            app.SnakeEyesRolledLabel.Position = [171 155 110 22];
             app.SnakeEyesRolledLabel.Text = 'Snake Eyes Rolled!';
 
             % Create EndGameButton
             app.EndGameButton = uibutton(app.UIFigure, 'push');
             app.EndGameButton.ButtonPushedFcn = createCallbackFcn(app, @EndGameButtonPushed, true);
             app.EndGameButton.BackgroundColor = [0.8784 0.6588 0.6588];
-            app.EndGameButton.Position = [193 23 166 40];
+            app.EndGameButton.Position = [238 18 166 40];
             app.EndGameButton.Text = 'End Game';
 
             % Create Image5
             app.Image5 = uiimage(app.UIFigure);
             app.Image5.Visible = 'off';
-            app.Image5.Position = [100 139 222 148];
+            app.Image5.Position = [128 176 222 148];
             app.Image5.ImageSource = 'SnakeEyesGif.gif';
 
             % Create XButton
@@ -885,8 +888,15 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             app.XButton.BackgroundColor = [0 0 0];
             app.XButton.FontColor = [1 1 1];
             app.XButton.Visible = 'off';
-            app.XButton.Position = [284 250 30 22];
+            app.XButton.Position = [306 272 30 22];
             app.XButton.Text = 'X';
+
+            % Create SnakeEyesLabel
+            app.SnakeEyesLabel = uilabel(app.UIFigure);
+            app.SnakeEyesLabel.FontSize = 25;
+            app.SnakeEyesLabel.FontWeight = 'bold';
+            app.SnakeEyesLabel.Position = [25 407 228 45];
+            app.SnakeEyesLabel.Text = 'Snake Eyes!';
 
             % Show the figure after all components are created
             app.UIFigure.Visible = 'on';

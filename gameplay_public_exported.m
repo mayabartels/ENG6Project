@@ -905,7 +905,7 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             app.OneSnakeEyeRolledLabel.HorizontalAlignment = 'center';
             app.OneSnakeEyeRolledLabel.FontColor = [1 0 0];
             app.OneSnakeEyeRolledLabel.Visible = 'off';
-            app.OneSnakeEyeRolledLabel.Position = [161 155 130 22];
+            app.OneSnakeEyeRolledLabel.Position = [178 155 130 22];
             app.OneSnakeEyeRolledLabel.Text = {'One Snake Eye Rolled!'; ''};
 
             % Create SnakeEyesRolledLabel
@@ -913,7 +913,7 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             app.SnakeEyesRolledLabel.HorizontalAlignment = 'center';
             app.SnakeEyesRolledLabel.FontColor = [1 0 0];
             app.SnakeEyesRolledLabel.Visible = 'off';
-            app.SnakeEyesRolledLabel.Position = [171 155 110 22];
+            app.SnakeEyesRolledLabel.Position = [188 155 110 22];
             app.SnakeEyesRolledLabel.Text = 'Snake Eyes Rolled!';
 
             % Create EndGameButton
@@ -935,7 +935,7 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             app.XButton.BackgroundColor = [0 0 0];
             app.XButton.FontColor = [1 1 1];
             app.XButton.Visible = 'off';
-            app.XButton.Position = [331 425 30 22];
+            app.XButton.Position = [331 407 30 22];
             app.XButton.Text = 'X';
 
             % Create SnakeEyesLabel

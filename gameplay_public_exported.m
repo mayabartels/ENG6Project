@@ -926,7 +926,7 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             % Create Image5
             app.Image5 = uiimage(app.UIFigure);
             app.Image5.Visible = 'off';
-            app.Image5.Position = [128 176 222 148];
+            app.Image5.Position = [210 327 151 120];
             app.Image5.ImageSource = 'SnakeEyesGif.gif';
 
             % Create XButton
@@ -935,7 +935,7 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             app.XButton.BackgroundColor = [0 0 0];
             app.XButton.FontColor = [1 1 1];
             app.XButton.Visible = 'off';
-            app.XButton.Position = [306 272 30 22];
+            app.XButton.Position = [331 425 30 22];
             app.XButton.Text = 'X';
 
             % Create SnakeEyesLabel

@@ -132,17 +132,15 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 set(app.SnakeEyesRolledLabel, 'visible', 'off');
                 set(app.OneSnakeEyeRolledLabel, 'visible', 'off');
                 
-               % Roll the dice
+                % Roll the dice
                 [rollScore] = diceRoll(1);
-                dice1=rollScore(1);
-                dice2=rollScore(2);
                 
-                
-                 %show dice 1 image
-                showDiceImage(app.dice1face1, app.dice1face2, app.dice1face3, app.dice1face4, app.dice1face5, app.dice1face6, dice1);
+                %show dice 1 image
+                [dice1Roll]= dice1Image(rollScore)
                 
                 %show dice 2 image
-                 showDiceImage(app.dice2face1, app.dice2face2, app.dice2face3, app.dice2face4, app.dice2face5, app.dice2face6, dice2);
+                [dice2Roll]= dice2Image(rollScore)
+                
                 % Calculate the score for the round
                 [diceScore, gameScore, snakeEyes, snakeEye] = scoreUpdate(rollScore);
                 
@@ -245,15 +243,12 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 
                 % Roll the dice
                 [rollScore] = diceRoll(1);
-                dice1=rollScore(1);
-                dice2=rollScore(2);
-                
                 
                  %show dice 1 image
-              showDiceImage(app.dice1face1, app.dice1face2, app.dice1face3, app.dice1face4, app.dice1face5, app.dice1face6, dice1);
+                [dice1Roll]= dice1Image(rollScore);
                 
                 %show dice 2 image
-                showDiceImage(app.dice2face1, app.dice2face2, app.dice2face3, app.dice2face4, app.dice2face5, app.dice2face6, dice2);
+                [dice2Roll]= dice2Image(rollScore);
                 
                 % Calculate the score for the round
                 [diceScore, gameScore, snakeEyes, snakeEye] = scoreUpdate(rollScore);
@@ -475,17 +470,14 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 set(app.SnakeEyesRolledLabel, 'visible', 'off');
                 set(app.OneSnakeEyeRolledLabel, 'visible', 'off');
                 
-               % Roll the dice
+                % Roll the dice
                 [rollScore] = diceRoll(1);
-                dice1=rollScore(1);
-                dice2=rollScore(2);
-                
                 
                  %show dice 1 image
-                showDiceImage(app.dice1face1, app.dice1face2, app.dice1face3, app.dice1face4, app.dice1face5, app.dice1face6, dice1);
+                [dice1Roll]= dice1Image(rollScore);
                 
                 %show dice 2 image
-             showDiceImage(app.dice2face1, app.dice2face2, app.dice2face3, app.dice2face4, app.dice2face5, app.dice2face6, dice2);
+                [dice2Roll]= dice2Image(rollScore);
                 
                 % Calculate the score for the round
                 [diceScore, gameScore, snakeEyes, snakeEye] = scoreUpdate(rollScore);
@@ -582,19 +574,16 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 set(app.SnakeEyesRolledLabel, 'visible', 'off');
                 set(app.OneSnakeEyeRolledLabel, 'visible', 'off');
                 
-               % Roll the dice
+                % Roll the dice
                 [rollScore] = diceRoll(1);
-                dice1=rollScore(1);
-                dice2=rollScore(2);
-                
                 
                  %show dice 1 image
-                 showDiceImage(app.dice1face1, app.dice1face2, app.dice1face3, app.dice1face4, app.dice1face5, app.dice1face6, dice1);
+                [dice1Roll]= dice1Image(rollScore);
                 
                 %show dice 2 image
-                 showDiceImage(app.dice2face1, app.dice2face2, app.dice2face3, app.dice2face4, app.dice2face5, app.dice2face6, dice2);
-               
-                 % Calculate the score for the round
+                [dice2Roll]= dice2Image(rollScore)
+                
+                % Calculate the score for the round
                 [diceScore, gameScore, snakeEyes, snakeEye] = scoreUpdate(rollScore);
                 
                 % Update the player score based on the dice roll

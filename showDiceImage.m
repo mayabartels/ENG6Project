@@ -1,4 +1,5 @@
-function  [diceRoll]= showDiceImage(face1, face2, face3, face4, face5, face6, diceValue)
+function  showDiceImage(face1, face2, face3, face4, face5, face6, diceValue)
+
 
 
 switch diceValue

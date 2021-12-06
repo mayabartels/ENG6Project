@@ -104,7 +104,7 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             % Set player names
             app.Player1EditField.Value = app.Player1.playerName;
             app.Player2EditField.Value = app.Player2.playerName;
-            app.roundNum=0
+            app.roundNum=1
             
         end
 

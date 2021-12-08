@@ -75,7 +75,6 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 pause(app.writeDelay);
                 thingSpeakWrite(app.channelID, 'Fields', app.fieldNum, 'Values', [0,0,0], 'WriteKey', app.writeKey);
             end
-        end
     
         function updateplot(app, sz, c)
             % Store inputs as properties

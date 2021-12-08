@@ -11,16 +11,45 @@ classdef ChoosePlayer_exported < matlab.apps.AppBase
     % Callbacks that handle component events
     methods (Access = private)
 
+        % Code that executes after component creation
+        function startupFcn(app)
+            % Create global variables for player1 and player2 turns
+            global player1Turn;
+            global player2Turn;
+            
+            % Set initial values for player1Turn and player2Turn to false
+            player1Turn = false;
+            player2Turn = false;
+        end
+        
         % Value changed function: Player1CheckBox
         function Player1CheckBoxValueChanged(app, event)
+            % Import global variable for player turn
             global player1Turn;
-            player1Turn = true;
+            
+            % If 
+            if ~player1Turn
+                player1Turn = true;
+            elseif player1Turn
+                player1Turn = ~player1Turn;
+            end
+            
+            disp(player1Turn)
         end
 
         % Value changed function: Player2CheckBox
         function Player2CheckBoxValueChanged(app, event)
+            % Import global variable for player turn
             global player2Turn;
-            player2Turn = true;
+            
+            % If 
+            if ~player2Turn
+                player2Turn = true;
+            elseif player2Turn
+                player2Turn = ~player2Turn;
+            end
+            
+            disp(player2Turn)
         end
     end
 
@@ -61,13 +90,16 @@ classdef ChoosePlayer_exported < matlab.apps.AppBase
     methods (Access = public)
 
         % Construct app
-        function app = ChoosePlayer
+        function app = ChoosePlayer_exported
 
             % Create UIFigure and components
             createComponents(app)
 
             % Register the app with App Designer
             registerApp(app, app.UIFigure)
+            
+            % Execute the startup function
+            runStartupFcn(app, @startupFcn)
 
             if nargout == 0
                 clear app

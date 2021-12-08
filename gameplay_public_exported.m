@@ -97,7 +97,10 @@ classdef gameplay_public_exported < matlab.apps.AppBase
 
         % Code that executes after component creation
         function startupFcn(app, data)
-           
+            %  Import global variables
+            global player1Turn;
+            global player2Turn;
+            
             %player icons and dice animation:
             set(app.Image,'visible','on');
             set(app.Image2,'visible','on');
@@ -122,12 +125,22 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             app.Player2EditField.Value = app.Player2.playerName;
             app.roundNum=1
             
-            % Start with disabling player 2 buttons
-            set(app.RollButton, 'Enable', 'Off');
-            set(app.RollAgainButton_2, 'Enable', 'Off');
-            set(app.EndTurnButton_2, 'Enable', 'Off');
-            set(app.RollAgainButton_3, 'Enable', 'Off');
-            set(app.EndTurnButton_3, 'Enable', 'Off');
+            if player1Turn
+                % Start with disabling player 2 buttons
+                set(app.RollButton, 'Enable', 'Off');
+                set(app.RollAgainButton_2, 'Enable', 'Off');
+                set(app.EndTurnButton_2, 'Enable', 'Off');
+                set(app.RollAgainButton_3, 'Enable', 'Off');
+                set(app.EndTurnButton_3, 'Enable', 'Off');
+            elseif player2Turn
+                % Start with disabling player 2 buttons
+                set(app.RollButton, 'Enable', 'Off');
+                set(app.RollAgainButton_2, 'Enable', 'Off');
+                set(app.EndTurnButton_2, 'Enable', 'Off');
+                set(app.RollButton_2, 'Enable', 'Off');
+                set(app.RollAgainButton_3, 'Enable', 'Off');
+                set(app.EndTurnButton_3, 'Enable', 'Off');
+            end
             
             %ThingSpeak 
             app.myPlayerNumber = 1;
@@ -156,14 +169,10 @@ classdef gameplay_public_exported < matlab.apps.AppBase
 
         % Button pushed function: RollButton_2
         function RollButton_2Pushed(app, event)
-        
-            %Disable Roll Button
-            set(app.RollButton_2, 'Enable', 'Off');
             
-            %Disable Player 2 Buttons
-            set(app.RollButton, 'Enable', 'Off');
-            set(app.RollAgainButton_2, 'Enable', 'Off');
-            set(app.EndTurnButton_2, 'Enable', 'Off');
+            % Import global variables
+            global player1Turn;
+            global player2Turn;
             
             if app.Player1.playerTurn && app.PlayerRolls == 0
                 
@@ -213,12 +222,25 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 % Update table with score data
                 app.UITable.Data= data1;
                 
-                % Turn off the roll button for player 1
-                set(app.RollButton_2, 'Enable', 'Off');
+                if player1Turn
+                    %Disable Roll Button
+                    set(app.RollButton_2, 'Enable', 'Off');
+
+                    %Disable Player 2 Buttons
+                    set(app.RollButton, 'Enable', 'Off');
+                    set(app.RollAgainButton_2, 'Enable', 'Off');
+                    set(app.EndTurnButton_2, 'Enable', 'Off');
+                end
                 
-                % Turn on roll again and end turn for player 1
-                set(app.RollAgainButton_3, 'Enable', 'On');
-                set(app.EndTurnButton_3, 'Enable', 'On');
+                if player1Turn
+                    % Turn on roll again and end turn for player 1
+                    set(app.RollAgainButton_3, 'Enable', 'On');
+                    set(app.EndTurnButton_3, 'Enable', 'On');
+                elseif player2Turn
+                    % Turn on roll again and end turn for player 1
+                    set(app.RollAgainButton_3, 'Enable', 'Off');
+                    set(app.EndTurnButton_3, 'Enable', 'Off');
+                end
                 
                 % Make it the other player's turn if snake eye or eyes
                 % rolled
@@ -236,14 +258,25 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                     set(app.Image3,'visible','on');
                     set(app.Image4,'visible','off');
                     
-                    % Disable buttons for player 1 and enable buttons for
-                    % player2
-                    set(app.RollButton_2, 'Enable', 'Off');
-                    set(app.RollAgainButton_3, 'Enable', 'Off');
-                    set(app.EndTurnButton_3, 'Enable', 'Off');
-                    set(app.RollButton, 'Enable', 'On');
-                    set(app.RollAgainButton_2, 'Enable', 'On');
-                    set(app.EndTurnButton_2, 'Enable', 'On');
+                    if player2Turn
+                        % Disable buttons for player 1 and enable buttons for
+                        % player2
+                        set(app.RollButton_2, 'Enable', 'Off');
+                        set(app.RollAgainButton_3, 'Enable', 'Off');
+                        set(app.EndTurnButton_3, 'Enable', 'Off');
+                        set(app.RollButton, 'Enable', 'On');
+                        set(app.RollAgainButton_2, 'Enable', 'Off');
+                        set(app.EndTurnButton_2, 'Enable', 'Off');
+                    elseif player1Turn
+                        % Disable buttons for player 1 and enable buttons for
+                        % player2
+                        set(app.RollButton_2, 'Enable', 'Off');
+                        set(app.RollAgainButton_3, 'Enable', 'Off');
+                        set(app.EndTurnButton_3, 'Enable', 'Off');
+                        set(app.RollButton, 'Enable', 'Off');
+                        set(app.RollAgainButton_2, 'Enable', 'Off');
+                        set(app.EndTurnButton_2, 'Enable', 'Off');
+                    end
                     
                     % Display snake eyes or snake eye if either was rolled
                     if snakeEyes
@@ -291,15 +324,32 @@ classdef gameplay_public_exported < matlab.apps.AppBase
         % Button pushed function: RollButton
         function RollButtonPushed(app, event)
             %Disable Roll Button
-            set(app.RollButton, 'Enable', 'Off');
+            %set(app.RollButton, 'Enable', 'Off');
             
-            %Disable Player 1 Buttons
-            set(app.rollButton_2, 'Enable', 'Off');
-            set(app.RollAgainButton_3, 'Enable', 'Off')
-            set(app.EndTurnButton_3, 'Enable', 'Off')
-
+            % Import global varibles
+            global player1Turn;
+            global player2Turn;
+            
+            %if player2Turn
+                %Disable Player 1 Buttons
+            %    set(app.RollButton_2, 'Enable', 'Off');
+            %    set(app.RollAgainButton_3, 'Enable', 'Off')
+            %    set(app.EndTurnButton_3, 'Enable', 'Off')
+            %elseif player1Turn
+            %    %Disable Player 1 Buttons
+            %    set(app.RollButton_2, 'Enable', 'Off');
+            %    set(app.RollAgainButton_3, 'Enable', 'Off')
+            %    set(app.EndTurnButton_3, 'Enable', 'Off')
+            %end
             
             if app.Player2.playerTurn && app.PlayerRolls == 0
+                
+                if player2Turn
+                    %Disable Player 1 Buttons
+                    set(app.RollButton_2, 'Enable', 'Off');
+                    set(app.RollAgainButton_3, 'Enable', 'Off');
+                    set(app.EndTurnButton_3, 'Enable', 'Off');
+                end
                 
                 % Reset the snake eye labels to off when next roll happens
                 set(app.SnakeEyesRolledLabel, 'visible', 'off');
@@ -349,13 +399,17 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 % Update table with score data
                 app.UITable2.Data= data2;
                 
-                % Turn off the roll button for player 2
-                set(app.RollButton, 'Enable', 'Off');
-                
-                % Turn on roll again and end turn for player 1
-                set(app.RollAgainButton_2, 'Enable', 'On');
-                set(app.EndTurnButton_2, 'Enable', 'On');
-                
+                if player2Turn
+                    % Turn off the roll button for player 2
+                    set(app.RollButton, 'Enable', 'Off');
+                    
+                    % Turn on roll again and end turn for player 1
+                    set(app.RollAgainButton_2, 'Enable', 'On');
+                    set(app.EndTurnButton_2, 'Enable', 'On');
+                elseif player1Turn
+                    set(app.RollAgainButton_2, 'Enable', 'Off');
+                    set(app.EndTurnButton_2, 'Enable', 'Off');
+                end
                 
                 % Make it the other player's turn if snake eye or eyes
                 % rolled
@@ -400,14 +454,23 @@ classdef gameplay_public_exported < matlab.apps.AppBase
 
                     end
                     
-                    % Disable buttons for player 2 and enable buttons for
-                    % player1
-                    set(app.RollButton_2, 'Enable', 'On');
-                    set(app.RollAgainButton_3, 'Enable', 'Off');
-                    set(app.EndTurnButton_3, 'Enable', 'Off');
-                    set(app.RollButton, 'Enable', 'Off');
-                    set(app.RollAgainButton_2, 'Enable', 'Off');
-                    set(app.EndTurnButton_2, 'Enable', 'Off');
+                    if player2Turn
+                        % Disable buttons for player 2 and enable buttons for
+                        % player1
+                        set(app.RollButton_2, 'Enable', 'Off');
+                        set(app.RollAgainButton_3, 'Enable', 'Off');
+                        set(app.EndTurnButton_3, 'Enable', 'Off');
+                        set(app.RollButton, 'Enable', 'Off');
+                        set(app.RollAgainButton_2, 'Enable', 'Off');
+                        set(app.EndTurnButton_2, 'Enable', 'Off');
+                    elseif player1Turn
+                        set(app.RollButton_2, 'Enable', 'On');
+                        set(app.RollAgainButton_3, 'Enable', 'Off');
+                        set(app.EndTurnButton_3, 'Enable', 'Off');
+                        set(app.RollButton, 'Enable', 'Off');
+                        set(app.RollAgainButton_2, 'Enable', 'Off');
+                        set(app.EndTurnButton_2, 'Enable', 'Off');
+                    end
                     
                     % End game if round 5 and snake eye or eyes rolled
                     if app.roundNum ==5
@@ -462,10 +525,14 @@ classdef gameplay_public_exported < matlab.apps.AppBase
 
         % Button pushed function: EndTurnButton_3
         function EndTurnButton_3Pushed(app, event)
-        
-           set(app.EndTurnButton_3, 'Enable', 'Off');
-           set(app.RollAgainButton_3,'Enable', 'Off');
-             %ThingSpeak
+            % Import global variables
+            global player1Turn;
+            global player2Turn;
+            
+           %set(app.EndTurnButton_3, 'Enable', 'Off');
+           %set(app.RollAgainButton_3,'Enable', 'Off');
+           
+           %ThingSpeak
            pause(app.writeDelay);
            thingSpeakWrite(app.channelID, 'WriteKey', app.writeKey, 'fields', [1, 2, 3], 'Values', [app.Player1.playerScore, 0, 1]);
 
@@ -473,10 +540,16 @@ classdef gameplay_public_exported < matlab.apps.AppBase
            %app.ScoreEditField.value = num2str(app.readData(1));
             
             if app.Player1.playerTurn
-                %Disable Player 1 Buttons
-                set(app.RollButton_2, 'Enable', 'Off');
-                set(app.RollAgainButton_3, 'Enable', 'Off');
-                set(app.EndTurnButton_3, 'Enable', 'Off')
+                
+                if player1Turn
+                    %Disable Player 1 Buttons
+                    set(app.RollButton_2, 'Enable', 'Off');
+                    set(app.RollAgainButton_3, 'Enable', 'Off');
+                    set(app.EndTurnButton_3, 'Enable', 'Off')
+                elseif player2Turn
+                    % Player 1 buttons shouldn't be enabled if player2Turn
+                    % is true
+                end
                 
                 % Switch the player turn when pushed
                 app.Player1.playerTurn = ~app.Player1.playerTurn;
@@ -487,14 +560,25 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 set(app.Image3,'visible','on');
                 set(app.Image4,'visible','off');
                 
-                % Disable buttons for player 1 and enable buttons for
-                % player2
-                set(app.RollButton_2, 'Enable', 'Off');
-                set(app.RollAgainButton_3, 'Enable', 'Off');
-                set(app.EndTurnButton_3, 'Enable', 'Off');
-                set(app.RollButton, 'Enable', 'On');
-                set(app.RollAgainButton_2, 'Enable', 'Off');
-                set(app.EndTurnButton_2, 'Enable', 'Off');
+                if player1Turn
+                    % Disable buttons for player 1 and enable buttons for
+                    % player2
+                    set(app.RollButton_2, 'Enable', 'Off');
+                    set(app.RollAgainButton_3, 'Enable', 'Off');
+                    set(app.EndTurnButton_3, 'Enable', 'Off');
+                    set(app.RollButton, 'Enable', 'Off');
+                    set(app.RollAgainButton_2, 'Enable', 'Off');
+                    set(app.EndTurnButton_2, 'Enable', 'Off');
+                elseif player2Turn
+                    % Disable buttons for player 1 and enable buttons for
+                    % player2
+                    set(app.RollButton_2, 'Enable', 'Off');
+                    set(app.RollAgainButton_3, 'Enable', 'Off');
+                    set(app.EndTurnButton_3, 'Enable', 'Off');
+                    set(app.RollButton, 'Enable', 'On');
+                    set(app.RollAgainButton_2, 'Enable', 'Off');
+                    set(app.EndTurnButton_2, 'Enable', 'Off');
+                end
                 
             else
             end
@@ -510,17 +594,25 @@ classdef gameplay_public_exported < matlab.apps.AppBase
 
         % Button pushed function: EndTurnButton_2
         function EndTurnButton_2Pushed(app, event)
-        
+            % Import global variables
+            global player1Turn;
+            global player2Turn;
+            
             %ThingSpeak
             pause(app.writeDelay);
             thingSpeakWrite(app.channelID, 'WriteKey', app.writeKey, 'fields', [1, 2, 3], 'Values', [app.Player1.playerScore, app.Player2.playerScore, 1]);
 
             
             if app.Player2.playerTurn
-                % Disable Player 2 Buttons
-             set(app.RollButton, 'Enable', 'Off');
-             set(app.RollAgainButton_2, 'Enable', 'Off');
-             set(app.EndTurnButton_2, 'Enable', 'Off');
+                
+                if player2Turn
+                    % Disable Player 2 Buttons
+                    set(app.RollButton, 'Enable', 'Off');
+                    set(app.RollAgainButton_2, 'Enable', 'Off');
+                    set(app.EndTurnButton_2, 'Enable', 'Off');
+                elseif player1Turn
+                    % buttons should be off already
+                end
              
                 % Switch the player turn when pushed
                 app.Player1.playerTurn = ~app.Player1.playerTurn;
@@ -532,14 +624,23 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 set(app.Image3,'visible','off');
                 set(app.Image4,'visible','on');
                 
-                % Disable buttons for player 2 and enable buttons for
-                % player1
-                set(app.RollButton_2, 'Enable', 'On');
-                set(app.RollAgainButton_3, 'Enable', 'Off');
-                set(app.EndTurnButton_3, 'Enable', 'Off');
-                set(app.RollButton, 'Enable', 'Off');
-                set(app.RollAgainButton_2, 'Enable', 'Off');
-                set(app.EndTurnButton_2, 'Enable', 'Off');
+                if player1Turn
+                    % Disable buttons for player 2 and enable buttons for
+                    % player1
+                    set(app.RollButton_2, 'Enable', 'On');
+                    set(app.RollAgainButton_3, 'Enable', 'Off');
+                    set(app.EndTurnButton_3, 'Enable', 'Off');
+                    set(app.RollButton, 'Enable', 'Off');
+                    set(app.RollAgainButton_2, 'Enable', 'Off');
+                    set(app.EndTurnButton_2, 'Enable', 'Off');
+                elseif player2Turn
+                    set(app.RollButton_2, 'Enable', 'Off');
+                    set(app.RollAgainButton_3, 'Enable', 'Off');
+                    set(app.EndTurnButton_3, 'Enable', 'Off');
+                    set(app.RollButton, 'Enable', 'Off');
+                    set(app.RollAgainButton_2, 'Enable', 'Off');
+                    set(app.EndTurnButton_2, 'Enable', 'Off');
+                end
                 
             else
             end
@@ -587,6 +688,10 @@ classdef gameplay_public_exported < matlab.apps.AppBase
 
         % Button pushed function: RollAgainButton_3
         function RollAgainButton_3Pushed(app, event)
+            
+            % Import global variables
+            global player1Turn;
+            global player2Turn;
             
             if app.Player1.playerTurn
                 
@@ -654,14 +759,25 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                     set(app.Image3,'visible','on');
                     set(app.Image4,'visible','off');
                     
-                    % Disable buttons for player 1 and enable buttons for
-                    % player2
-                    set(app.RollButton_2, 'Enable', 'Off');
-                    set(app.RollAgainButton_3, 'Enable', 'Off');
-                    set(app.EndTurnButton_3, 'Enable', 'Off');
-                    set(app.RollButton, 'Enable', 'On');
-                    set(app.RollAgainButton_2, 'Enable', 'Off');
-                    set(app.EndTurnButton_2, 'Enable', 'Off');
+                    if player1Turn
+                        % Disable buttons for player 1 and enable buttons for
+                        % player2
+                        set(app.RollButton_2, 'Enable', 'Off');
+                        set(app.RollAgainButton_3, 'Enable', 'Off');
+                        set(app.EndTurnButton_3, 'Enable', 'Off');
+                        set(app.RollButton, 'Enable', 'Off');
+                        set(app.RollAgainButton_2, 'Enable', 'Off');
+                        set(app.EndTurnButton_2, 'Enable', 'Off');
+                    elseif player2Turn
+                        % Disable buttons for player 1 and enable buttons for
+                        % player2
+                        set(app.RollButton_2, 'Enable', 'Off');
+                        set(app.RollAgainButton_3, 'Enable', 'Off');
+                        set(app.EndTurnButton_3, 'Enable', 'Off');
+                        set(app.RollButton, 'Enable', 'On');
+                        set(app.RollAgainButton_2, 'Enable', 'Off');
+                        set(app.EndTurnButton_2, 'Enable', 'Off');
+                    end
 
                     % Display snake eyes or snake eye if either was rolled
                     if snakeEyes
@@ -704,6 +820,10 @@ classdef gameplay_public_exported < matlab.apps.AppBase
         % Button pushed function: RollAgainButton_2
         function RollAgainButton_2Pushed(app, event)
            
+            % Import global variables
+            global player1Turn;
+            global player2Turn;
+            
             if app.Player2.playerTurn
                 
                 % Reset the snake eye labels to off when next roll happens
@@ -771,14 +891,23 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                     set(app.Image3,'visible','off');
                     set(app.Image4,'visible','on');
                     
-                    % Disable buttons for player 2 and enable buttons for
-                    % player1
-                    set(app.RollButton_2, 'Enable', 'On');
-                    set(app.RollAgainButton_3, 'Enable', 'Off');
-                    set(app.EndTurnButton_3, 'Enable', 'Off');
-                    set(app.RollButton, 'Enable', 'Off');
-                    set(app.RollAgainButton_2, 'Enable', 'Off');
-                    set(app.EndTurnButton_2, 'Enable', 'Off');
+                    if player1Turn
+                        % Disable buttons for player 2 and enable buttons for
+                        % player1
+                        set(app.RollButton_2, 'Enable', 'On');
+                        set(app.RollAgainButton_3, 'Enable', 'Off');
+                        set(app.EndTurnButton_3, 'Enable', 'Off');
+                        set(app.RollButton, 'Enable', 'Off');
+                        set(app.RollAgainButton_2, 'Enable', 'Off');
+                        set(app.EndTurnButton_2, 'Enable', 'Off');
+                    elseif player2Turn
+                        set(app.RollButton_2, 'Enable', 'Off');
+                        set(app.RollAgainButton_3, 'Enable', 'Off');
+                        set(app.EndTurnButton_3, 'Enable', 'Off');
+                        set(app.RollButton, 'Enable', 'Off');
+                        set(app.RollAgainButton_2, 'Enable', 'Off');
+                        set(app.EndTurnButton_2, 'Enable', 'Off');
+                    end
                     
                     % Display snake eyes or snake eye if either was rolled
                     if snakeEyes

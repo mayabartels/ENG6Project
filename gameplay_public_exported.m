@@ -66,13 +66,15 @@ classdef gameplay_public_exported < matlab.apps.AppBase
         p2Roll
         readDelay
         writeDelay = 15;
+        fieldNum = [1,2,3]
     end
 
     methods (Access = private)
     
-        function [] = ClearThinkSpeakChannel(app)
-            pause(app.writeDelay);
-            thingSpeakWrite(app.channelID, 'Fields', 3, 'Values', 0, 'WriteKey', app.writeKey);
+            function [] = ClearThinkSpeakChannel(app)
+                pause(app.writeDelay);
+                thingSpeakWrite(app.channelID, 'Fields', app.fieldNum, 'Values', [0,0,0], 'WriteKey', app.writeKey);
+            end
         end
     
         function updateplot(app, sz, c)
@@ -87,32 +89,7 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             
             % Re-enable the Plot Options button
             app.OptionsButton.Enable = 'on';
-        end
-        
-        
-        function [] = UpdatePlayerTwoData(app)
-            playerWhoSentMsg = 0;
-
-            while playerWhoSentMsg ~= 2
-                data = thingSpeakRead(app.channelID);
-                playerWhoSentMsg = data(3);
-                pause(app.readDelay);
-            end
-        end
-
-        function [] = UpdatePlayerOneData(app)
-            playerWhoSentMsg = 0; 
-
-            while playerWhoSentMsg ~= 1
-                data = thingSpeakRead(app.channelID);
-                playerWhoSentMsg = data(3);
-                pause(app.readDelay);
-            end
-
-            app.p1Roll = data(1);
-            app.p2Roll = data(2);
-        end
-        
+        end   
     end
    
 
@@ -180,6 +157,10 @@ classdef gameplay_public_exported < matlab.apps.AppBase
 
         % Button pushed function: RollButton_2
         function RollButton_2Pushed(app, event)
+        
+            %Disable Roll Button
+            set(app.RollButton_2, 'Enable', 'Off');
+            
             %Disable Player 2 Buttons
             set(app.RollButton, 'Enable', 'Off');
             set(app.RollAgainButton_2, 'Enable', 'Off');
@@ -195,8 +176,7 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 [rollScore] = diceRoll(1);
                 dice1=rollScore(1);
                 dice2=rollScore(2);
-                
-                
+                     
                 %show dice 1 image
                 showDiceImage(app.dice1face1, app.dice1face2, app.dice1face3, app.dice1face4, app.dice1face5, app.dice1face6, dice1);
                 
@@ -318,6 +298,9 @@ classdef gameplay_public_exported < matlab.apps.AppBase
 
         % Button pushed function: RollButton
         function RollButtonPushed(app, event)
+            %Disable Roll Button
+            set(app.RollButton, 'Enable', 'Off');
+            
             %Disable Player 1 Buttons
             set(app.rollButton_2, 'Enable', 'Off');
             set(app.RollAgainButton_3, 'Enable', 'Off')
@@ -494,6 +477,15 @@ classdef gameplay_public_exported < matlab.apps.AppBase
 
         % Button pushed function: EndTurnButton_3
         function EndTurnButton_3Pushed(app, event)
+        
+           set(app.EndTurnButton_3, 'Enable', 'Off');
+           set(app.RollAgainButton_3,'Enable', 'Off');
+             %ThingSpeak
+           pause(app.writeDelay);
+           thingSpeakWrite(app.channelID, 'WriteKey', app.writeKey, 'fields', [1, 2, 3], 'Values', [app.Player1.playerScore, 0, 1]);
+
+           %app.readData = thingSpeakRead(app.channelID);
+           %app.ScoreEditField.value = num2str(app.readData(1));
             
             if app.Player1.playerTurn
                 %Disable Player 1 Buttons
@@ -533,6 +525,11 @@ classdef gameplay_public_exported < matlab.apps.AppBase
 
         % Button pushed function: EndTurnButton_2
         function EndTurnButton_2Pushed(app, event)
+        
+            %ThingSpeak
+            pause(app.writeDelay);
+            thingSpeakWrite(app.channelID, 'WriteKey', app.writeKey, 'fields', [1, 2, 3], 'Values', [app.Player1.playerScore, app.Player2.playerScore, 1]);
+
             
             if app.Player2.playerTurn
                 % Disable Player 2 Buttons

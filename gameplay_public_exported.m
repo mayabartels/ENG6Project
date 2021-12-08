@@ -56,9 +56,24 @@ classdef gameplay_public_exported < matlab.apps.AppBase
         Player2Scores = [];    % Array created for player 2 scores
         player1Name
         player2Name
+        
+        %thingspeak properties
+        myPlayerNumber
+        channelID
+        writeKey 
+        readKey
+        p1Roll
+        p2Roll
+        readDelay
+        writeDelay = 15;
     end
 
     methods (Access = private)
+    
+        function [] = ClearThinkSpeakChannel(app)
+            pause(app.writeDelay);
+            thingSpeakWrite(app.channelID, 'Fields', 3, 'Values', 0, 'WriteKey', app.writeKey);
+        end
     
         function updateplot(app, sz, c)
             % Store inputs as properties
@@ -73,6 +88,31 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             % Re-enable the Plot Options button
             app.OptionsButton.Enable = 'on';
         end
+        
+        
+        function [] = UpdatePlayerTwoData(app)
+            playerWhoSentMsg = 0;
+
+            while playerWhoSentMsg ~= 2
+                data = thingSpeakRead(app.channelID);
+                playerWhoSentMsg = data(3);
+                pause(app.readDelay);
+            end
+        end
+
+        function [] = UpdatePlayerOneData(app)
+            playerWhoSentMsg = 0; 
+
+            while playerWhoSentMsg ~= 1
+                data = thingSpeakRead(app.channelID);
+                playerWhoSentMsg = data(3);
+                pause(app.readDelay);
+            end
+
+            app.p1Roll = data(1);
+            app.p2Roll = data(2);
+        end
+        
     end
    
 
@@ -112,6 +152,14 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             set(app.EndTurnButton_2, 'Enable', 'Off');
             set(app.RollAgainButton_3, 'Enable', 'Off');
             set(app.EndTurnButton_3, 'Enable', 'Off');
+            
+            %ThingSpeak 
+            app.myPlayerNumber = 1;
+            app.channelID = 1591463;
+            app.writeKey = '483DD0NGE7ZPB6D1';
+            app.readKey = '13MGL5RCXCOA33SX';
+            app.readDelay = 15;
+            app.ClearThinkSpeakChannel();
         end
 
         % Callback function
@@ -132,6 +180,11 @@ classdef gameplay_public_exported < matlab.apps.AppBase
 
         % Button pushed function: RollButton_2
         function RollButton_2Pushed(app, event)
+            %Disable Player 2 Buttons
+            set(app.RollButton, 'Enable', 'Off');
+            set(app.RollAgainButton_2, 'Enable', 'Off');
+            set(app.EndTurnButton_2, 'Enable', 'Off');
+            
             if app.Player1.playerTurn && app.PlayerRolls == 0
                 
                 % Reset the snake eye labels to off when next roll happens
@@ -144,7 +197,7 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 dice2=rollScore(2);
                 
                 
-                 %show dice 1 image
+                %show dice 1 image
                 showDiceImage(app.dice1face1, app.dice1face2, app.dice1face3, app.dice1face4, app.dice1face5, app.dice1face6, dice1);
                 
                 %show dice 2 image
@@ -187,6 +240,13 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 % Turn on roll again and end turn for player 1
                 set(app.RollAgainButton_3, 'Enable', 'On');
                 set(app.EndTurnButton_3, 'Enable', 'On');
+                
+                %ThingSpeak
+                app.p1roll = playerScore
+                pause(app.writeDelay);
+                thingSpeakWrite(app.ChannelID, 'fields', [1,3], 'Values', [app.p1roll, 1], 'WriteKey', app.writeKey);
+                app.UpdatePlayerTwoData();
+                set(app.RollButton_2, 'Enable', 'Off');
                 
                 % Make it the other player's turn if snake eye or eyes
                 % rolled
@@ -258,6 +318,11 @@ classdef gameplay_public_exported < matlab.apps.AppBase
 
         % Button pushed function: RollButton
         function RollButtonPushed(app, event)
+            %Disable Player 1 Buttons
+            set(app.rollButton_2, 'Enable', 'Off');
+            set(app.RollAgainButton_3, 'Enable', 'Off')
+            set(app.EndTurnButton_3, 'Enable', 'Off')
+
             
             if app.Player2.playerTurn && app.PlayerRolls == 0
                 
@@ -315,6 +380,14 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 % Turn on roll again and end turn for player 1
                 set(app.RollAgainButton_2, 'Enable', 'On');
                 set(app.EndTurnButton_2, 'Enable', 'On');
+                
+                %ThingSpeak
+                app.readData 
+                app.p2Roll = playerScore;
+                pause(app.writeDelay);
+                thingSpeakWrite(app.ChannelID, 'fields', [2,3], 'Values', [app.p2Roll, 1], 'WriteKey', app.writeKey);
+                app.UpdatePlayerOneData();
+                set(app.RollButton, 'Enable', 'Off');
                 
                 % Make it the other player's turn if snake eye or eyes
                 % rolled
@@ -423,6 +496,10 @@ classdef gameplay_public_exported < matlab.apps.AppBase
         function EndTurnButton_3Pushed(app, event)
             
             if app.Player1.playerTurn
+                %Disable Player 1 Buttons
+                set(app.RollButton_2, 'Enable', 'Off');
+                set(app.RollAgainButton_3, 'Enable', 'Off');
+                set(app.EndTurnButton_3, 'Enable', 'Off')
                 
                 % Switch the player turn when pushed
                 app.Player1.playerTurn = ~app.Player1.playerTurn;
@@ -458,7 +535,11 @@ classdef gameplay_public_exported < matlab.apps.AppBase
         function EndTurnButton_2Pushed(app, event)
             
             if app.Player2.playerTurn
-                
+                % Disable Player 2 Buttons
+             set(app.RollButton, 'Enable', 'Off');
+             set(app.RollAgainButton_2, 'Enable', 'Off');
+             set(app.EndTurnButton_2, 'Enable', 'Off');
+             
                 % Switch the player turn when pushed
                 app.Player1.playerTurn = ~app.Player1.playerTurn;
                 app.Player2.playerTurn = ~app.Player2.playerTurn;
@@ -568,6 +649,12 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                
                 % Update table with score data
                 app.UITable.Data = data1;
+                
+                %ThingSpeak 
+                app.p1roll = playerScore ;
+                pause(app.writeDelay);
+                thingSpeakWrite(app.ChannelID, 'fields', [1,3], 'Values', [app.p1Roll, 1], 'WriteKey', app.writeKey);
+                app.UpdatePlayerTwoData();
                 
                 % Increase the player round by 1
                 app.Player1.playerRoundNum = app.Player1.playerRoundNum + 1;
@@ -684,6 +771,12 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 
                 % Update table with score data
                 app.UITable2.Data = data2;
+                
+                %ThingSpeak
+                app.p2roll = playerScore; 
+                pause(app.writeDelay);
+                thingSpeakWrite(app.ChannelID, 'fields', [2,3], 'Values', [app.p2Roll, 1], 'WriteKey', app.writeKey);
+                app.UpdatePlayerOneData();
                 
                 % Increase the player round by 1
                 app.Player2.playerRoundNum = app.Player2.playerRoundNum + 1;

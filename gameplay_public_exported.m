@@ -221,13 +221,6 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 set(app.RollAgainButton_3, 'Enable', 'On');
                 set(app.EndTurnButton_3, 'Enable', 'On');
                 
-                %ThingSpeak
-                app.p1roll = playerScore
-                pause(app.writeDelay);
-                thingSpeakWrite(app.ChannelID, 'fields', [1,3], 'Values', [app.p1roll, 1], 'WriteKey', app.writeKey);
-                app.UpdatePlayerTwoData();
-                set(app.RollButton_2, 'Enable', 'Off');
-                
                 % Make it the other player's turn if snake eye or eyes
                 % rolled
                 if gameScore == 0
@@ -364,13 +357,6 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 set(app.RollAgainButton_2, 'Enable', 'On');
                 set(app.EndTurnButton_2, 'Enable', 'On');
                 
-                %ThingSpeak
-                app.readData 
-                app.p2Roll = playerScore;
-                pause(app.writeDelay);
-                thingSpeakWrite(app.ChannelID, 'fields', [2,3], 'Values', [app.p2Roll, 1], 'WriteKey', app.writeKey);
-                app.UpdatePlayerOneData();
-                set(app.RollButton, 'Enable', 'Off');
                 
                 % Make it the other player's turn if snake eye or eyes
                 % rolled
@@ -647,12 +633,6 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 % Update table with score data
                 app.UITable.Data = data1;
                 
-                %ThingSpeak 
-                app.p1roll = playerScore ;
-                pause(app.writeDelay);
-                thingSpeakWrite(app.ChannelID, 'fields', [1,3], 'Values', [app.p1Roll, 1], 'WriteKey', app.writeKey);
-                app.UpdatePlayerTwoData();
-                
                 % Increase the player round by 1
                 app.Player1.playerRoundNum = app.Player1.playerRoundNum + 1;
                 
@@ -768,12 +748,6 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 
                 % Update table with score data
                 app.UITable2.Data = data2;
-                
-                %ThingSpeak
-                app.p2roll = playerScore; 
-                pause(app.writeDelay);
-                thingSpeakWrite(app.ChannelID, 'fields', [2,3], 'Values', [app.p2Roll, 1], 'WriteKey', app.writeKey);
-                app.UpdatePlayerOneData();
                 
                 % Increase the player round by 1
                 app.Player2.playerRoundNum = app.Player2.playerRoundNum + 1;

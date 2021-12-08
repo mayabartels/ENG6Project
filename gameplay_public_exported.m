@@ -106,6 +106,12 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             app.Player2EditField.Value = app.Player2.playerName;
             app.roundNum=1
             
+            % Start with disabling player 2 buttons
+            set(app.RollButton, 'Enable', 'Off');
+            set(app.RollAgainButton_2, 'Enable', 'Off');
+            set(app.EndTurnButton_2, 'Enable', 'Off');
+            set(app.RollAgainButton_3, 'Enable', 'Off');
+            set(app.EndTurnButton_3, 'Enable', 'Off');
         end
 
         % Callback function
@@ -175,6 +181,13 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 % Update table with score data
                 app.UITable.Data= data1;
                 
+                % Turn off the roll button for player 1
+                set(app.RollButton_2, 'Enable', 'Off');
+                
+                % Turn on roll again and end turn for player 1
+                set(app.RollAgainButton_3, 'Enable', 'On');
+                set(app.EndTurnButton_3, 'Enable', 'On');
+                
                 % Make it the other player's turn if snake eye or eyes
                 % rolled
                 if gameScore == 0
@@ -190,6 +203,15 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                     % Image visualization commands
                     set(app.Image3,'visible','on');
                     set(app.Image4,'visible','off');
+                    
+                    % Disable buttons for player 1 and enable buttons for
+                    % player2
+                    set(app.RollButton_2, 'Enable', 'Off');
+                    set(app.RollAgainButton_3, 'Enable', 'Off');
+                    set(app.EndTurnButton_3, 'Enable', 'Off');
+                    set(app.RollButton, 'Enable', 'On');
+                    set(app.RollAgainButton_2, 'Enable', 'On');
+                    set(app.EndTurnButton_2, 'Enable', 'On');
                     
                     % Display snake eyes or snake eye if either was rolled
                     if snakeEyes
@@ -287,6 +309,13 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 % Update table with score data
                 app.UITable2.Data= data2;
                 
+                % Turn off the roll button for player 2
+                set(app.RollButton, 'Enable', 'Off');
+                
+                % Turn on roll again and end turn for player 1
+                set(app.RollAgainButton_2, 'Enable', 'On');
+                set(app.EndTurnButton_2, 'Enable', 'On');
+                
                 % Make it the other player's turn if snake eye or eyes
                 % rolled
                 if gameScore == 0
@@ -329,6 +358,15 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                         sound(y,Fs)
 
                     end
+                    
+                    % Disable buttons for player 2 and enable buttons for
+                    % player1
+                    set(app.RollButton_2, 'Enable', 'On');
+                    set(app.RollAgainButton_3, 'Enable', 'Off');
+                    set(app.EndTurnButton_3, 'Enable', 'Off');
+                    set(app.RollButton, 'Enable', 'Off');
+                    set(app.RollAgainButton_2, 'Enable', 'Off');
+                    set(app.EndTurnButton_2, 'Enable', 'Off');
                     
                     % End game if round 5 and snake eye or eyes rolled
                     if app.roundNum ==5
@@ -395,6 +433,15 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 set(app.Image3,'visible','on');
                 set(app.Image4,'visible','off');
                 
+                % Disable buttons for player 1 and enable buttons for
+                % player2
+                set(app.RollButton_2, 'Enable', 'Off');
+                set(app.RollAgainButton_3, 'Enable', 'Off');
+                set(app.EndTurnButton_3, 'Enable', 'Off');
+                set(app.RollButton, 'Enable', 'On');
+                set(app.RollAgainButton_2, 'Enable', 'Off');
+                set(app.EndTurnButton_2, 'Enable', 'Off');
+                
             else
             end
             
@@ -421,6 +468,15 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 % Image visualization commands
                 set(app.Image3,'visible','off');
                 set(app.Image4,'visible','on');
+                
+                % Disable buttons for player 2 and enable buttons for
+                % player1
+                set(app.RollButton_2, 'Enable', 'On');
+                set(app.RollAgainButton_3, 'Enable', 'Off');
+                set(app.EndTurnButton_3, 'Enable', 'Off');
+                set(app.RollButton, 'Enable', 'Off');
+                set(app.RollAgainButton_2, 'Enable', 'Off');
+                set(app.EndTurnButton_2, 'Enable', 'Off');
                 
             else
             end
@@ -534,6 +590,15 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                     % Image visualization commands
                     set(app.Image3,'visible','on');
                     set(app.Image4,'visible','off');
+                    
+                    % Disable buttons for player 1 and enable buttons for
+                    % player2
+                    set(app.RollButton_2, 'Enable', 'Off');
+                    set(app.RollAgainButton_3, 'Enable', 'Off');
+                    set(app.EndTurnButton_3, 'Enable', 'Off');
+                    set(app.RollButton, 'Enable', 'On');
+                    set(app.RollAgainButton_2, 'Enable', 'Off');
+                    set(app.EndTurnButton_2, 'Enable', 'Off');
 
                     % Display snake eyes or snake eye if either was rolled
                     if snakeEyes
@@ -642,6 +707,15 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                     % Image visualization commands
                     set(app.Image3,'visible','off');
                     set(app.Image4,'visible','on');
+                    
+                    % Disable buttons for player 2 and enable buttons for
+                    % player1
+                    set(app.RollButton_2, 'Enable', 'On');
+                    set(app.RollAgainButton_3, 'Enable', 'Off');
+                    set(app.EndTurnButton_3, 'Enable', 'Off');
+                    set(app.RollButton, 'Enable', 'Off');
+                    set(app.RollAgainButton_2, 'Enable', 'Off');
+                    set(app.EndTurnButton_2, 'Enable', 'Off');
                     
                     % Display snake eyes or snake eye if either was rolled
                     if snakeEyes

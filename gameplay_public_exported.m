@@ -57,24 +57,18 @@ classdef gameplay_public_exported < matlab.apps.AppBase
         player1Name
         player2Name
         
-        %thingspeak properties
-        myPlayerNumber
-        channelID
-        writeKey 
-        readKey
-        p1Roll
-        p2Roll
-        readDelay
-        writeDelay = 15;
-        fieldNum = [1,2,3]
+        %Thingspeak properties
+      %  myPlayerNumber
+      %  channelID
+      %  writeKey 
+      %  readKey
+      %  readDelay
+      %  writeDelay = 15;
+      %  fieldNum = [1,2,3]
     end
 
     methods (Access = private)
     
-            function [] = ClearThinkSpeakChannel(app)
-                pause(app.writeDelay);
-                thingSpeakWrite(app.channelID, 'Fields', app.fieldNum, 'Values', [0,0,0], 'WriteKey', app.writeKey);
-            end
     
         function updateplot(app, sz, c)
             % Store inputs as properties
@@ -142,13 +136,7 @@ classdef gameplay_public_exported < matlab.apps.AppBase
                 set(app.EndTurnButton_3, 'Enable', 'Off');
             end
             
-            %ThingSpeak 
-            app.myPlayerNumber = 1;
-            app.channelID = 1591463;
-            app.writeKey = '483DD0NGE7ZPB6D1';
-            app.readKey = '13MGL5RCXCOA33SX';
-            app.readDelay = 15;
-            app.ClearThinkSpeakChannel();
+
         end
 
         % Callback function
@@ -532,12 +520,6 @@ classdef gameplay_public_exported < matlab.apps.AppBase
            %set(app.EndTurnButton_3, 'Enable', 'Off');
            %set(app.RollAgainButton_3,'Enable', 'Off');
            
-           %ThingSpeak
-           pause(app.writeDelay);
-           thingSpeakWrite(app.channelID, 'WriteKey', app.writeKey, 'fields', [1, 2, 3], 'Values', [app.Player1.playerScore, 0, 1]);
-
-           %app.readData = thingSpeakRead(app.channelID);
-           %app.ScoreEditField.value = num2str(app.readData(1));
             
             if app.Player1.playerTurn
                 
@@ -598,10 +580,7 @@ classdef gameplay_public_exported < matlab.apps.AppBase
             global player1Turn;
             global player2Turn;
             
-            %ThingSpeak
-            pause(app.writeDelay);
-            thingSpeakWrite(app.channelID, 'WriteKey', app.writeKey, 'fields', [1, 2, 3], 'Values', [app.Player1.playerScore, app.Player2.playerScore, 1]);
-
+          
             
             if app.Player2.playerTurn
                 
